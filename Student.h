@@ -31,6 +31,9 @@ public:
 
 
 
+	Student& operator=(const Student& stud);
+
+
 	void Print();
 };
 

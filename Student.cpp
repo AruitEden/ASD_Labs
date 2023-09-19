@@ -53,6 +53,20 @@ Student::Student(std::string group, std::string name, int gpa)
 
 
 
+Student& Student::operator=(const Student& stud)
+{
+	if (this == &stud)
+	{
+		return *this;
+	}
+
+	SetGroup(stud.group);
+	SetName(stud.name);
+	SetGPA(stud.gpa);
+}
+
+
+
 void Student::Print()
 {
 	std::cout << "Group: "<< GetGroup()<<"\tName: " << GetName() << "\tGPA: " << GetGPA();
