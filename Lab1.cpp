@@ -78,7 +78,7 @@ void Sort_by_surname(Employee* employees, const uint32_t size);
 bool Equal_surnames(const std::string& surname1, const std::string& surname2);
 
 //Returns a sorted array of namesakes, if there aren't any in given array, returns nullptr
-Employee* Find_namesakes(Employee* employees, const uint32_t size);
+Employee* Find_namesakes(const Employee const* employees, const uint32_t size, uint32_t &returned_size);
 
 
 
@@ -92,7 +92,7 @@ int main()
     Employee staff[STAFF_COUNT]
     {
         Employee("Andriy", "Bulka", "Gennadiyovych", DateTime{1993, 3, 26}, Gender::Female),
-        Employee("Bogdan", "Kuzmnenko", "Vasylovych", DateTime{2000, 11, 12}, Gender::Female),
+        Employee("Bogdan", "Kuzmenko", "Vasylovych", DateTime{2000, 11, 12}, Gender::Female),
         Employee("Vasyl", "Gordienko", "Mykhailovych", DateTime{2001, 5, 12}, Gender::Female),
         Employee("Olga", "Petrova", "Andriivna", DateTime{2003, 4, 28}, Gender::Male),
         Employee("Natalia", "Kuzmenko", "Oleksiivna", DateTime{1994, 2, 14}, Gender::Male),
@@ -112,12 +112,33 @@ int main()
 
     Sort_by_surname(staff, STAFF_COUNT);
 
+
+
     std::cout << "-------AFTER SORT-------\n\n";
 
     for (int i = 0; i < STAFF_COUNT; ++i)
     {
         std::cout << staff[i] << '\n';
     }
+
+
+
+    std::cout << "-------NAMESAKES-------\n\n";
+
+    uint32_t n_size = 0;
+
+    Employee* namesakes = Find_namesakes(staff, STAFF_COUNT, n_size);
+
+    for (int i = 0; i < n_size; ++i)
+    {
+        std::cout << namesakes[i] << '\n';
+    }
+
+    delete[] namesakes;
+
+
+
+    return 0;
 
 }
 
@@ -199,30 +220,58 @@ bool Equal_surnames(const std::string& surname1, const std::string& surname2)
 
 }
 
-Employee* Find_namesakes(Employee* employees, const uint32_t size)
+Employee* Find_namesakes(const Employee *const employees, const uint32_t size, uint32_t& returned_size)
 {
 
-    if(size == 1)
+    returned_size = 0;
+
+    if (size == 1)
     {
         return nullptr;
     }
 
-    uint32_t new_size = 0;
-    Employee** arr = new Employee*[size];
 
-    Employee* temp = employees;
-    for(int i = 1; i < size; ++i)
+    const Employee** arr = new const Employee*[size];
+
+    bool equality = false;
+    for (int i = 1; i < size; ++i)
     {
 
-        if (Equal_surnames(temp->Get_second_name(), employees[i].Get_second_name()))
+        if (Equal_surnames(employees[i - 1].Get_second_name(), employees[i].Get_second_name()))
         {
-            
-        }
 
-        ++temp
+            arr[returned_size] = &employees[i - 1];
+            ++returned_size;
+            equality = true;
+
+        }
+        else if (equality)
+        {
+
+            arr[returned_size] = &employees[i - 1];
+            ++returned_size;
+            equality = false;
+
+        }
 
     }
 
-    return nullptr;
+
+    if (returned_size == 0)
+    {
+        delete[] arr;
+        return nullptr;
+    }
+
+
+    Employee* new_arr = new Employee[returned_size];
+
+    for(int i = 0; i < returned_size; ++i)
+    {
+        new_arr[i] = *(arr[i]);
+    }
+
+    delete[] arr;
+    return new_arr;
 
 }
