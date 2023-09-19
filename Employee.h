@@ -1,7 +1,8 @@
 #pragma once
 #include <iostream>
+#include <string>
 
-
+#define CSV_FILE_DELIM ';'
 
 
 
@@ -14,7 +15,7 @@ struct DateTime
     uint16_t    month;
     uint16_t    day;
 
-    friend std::ostream& operator << (std::ostream& out, const DateTime& time);
+    friend std::ostream& operator << (std::ostream& out, const DateTime& date_time);
 
 };
 
@@ -73,6 +74,8 @@ public:
 
 
     friend std::ostream& operator << (std::ostream& out, const Employee& emp);
+
+    friend std::istream& operator >> (std::istream& in, Employee& emp);
 
 };
 

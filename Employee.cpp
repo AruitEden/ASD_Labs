@@ -28,6 +28,29 @@ std::ostream& operator<<(std::ostream& out, const Employee& emp)
 
 }
 
+std::istream& operator>>(std::istream& in, Employee& emp)
+{
+
+    std::getline(in, emp.m_first_name, CSV_FILE_DELIM);
+    std::getline(in, emp.m_second_name, CSV_FILE_DELIM);
+    std::getline(in, emp.m_middle_name, CSV_FILE_DELIM);
+
+    std::string t;
+
+    std::getline(in, t, '.');
+    emp.m_birth_date.day = std::stoi(t);
+    std::getline(in, t, '.');
+    emp.m_birth_date.month = std::stoi(t);
+    std::getline(in, t, CSV_FILE_DELIM);
+    emp.m_birth_date.year = std::stoi(t);
+
+    std::getline(in, t, '\n');
+    emp.m_gender = (t == "Male") ? Gender::Male : Gender::Female;
+
+    return in;
+
+}
+
 
 
 //Using insert sort here
