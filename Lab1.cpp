@@ -11,6 +11,19 @@ void Add_employee(Employee*& staff, uint32_t& size, const Employee& emp);
 
 Employee Read_selected(std::fstream &fs, const uint32_t n);
 
+void Print_employees(const Employee* const staff, const uint32_t size);
+
+
+
+enum Menu_commands
+{
+    DEFAULT = 0,
+    PRINT_ARRAY = 'p',
+    ADD_ELEMENT = 'a',
+    CLEAR_CONSOLE = 'c',
+    QUIT_PROGRAM = 'q'
+};
+
 
 
 
@@ -19,35 +32,65 @@ int main()
 {
 
     std::fstream fs("Data_pool.csv");
-
     if (!fs) 
     {
         std::cerr << "Couldn't open the file\n";
         return -1;
     }
 
+
     uint32_t staff_size = 0;
     Employee* staff = new Employee[staff_size];
     
-    int n;
 
-    while (true) 
+    char command;
+    bool run = true;
+
+    while (run)
     {
 
-        std::cout << "Enter n: ";
-        std::cin >> n;
-        std::cin.ignore(1);
-
-        Add_employee(staff, staff_size, Read_selected(fs, n));
-
-        std::cout << "\n\n";
-
-        for (size_t i = 0; i < staff_size; i++)
+        std::cout << "Enter command: ";
+        if (std::cin.peek() == '\n') 
         {
-            std::cout << staff[i] << '\n';
+            std::cin.ignore(1);
         }
+        std::cin >> command;
 
-        std::cout << "\n\n";
+        switch ((Menu_commands)command)
+        {
+
+        case PRINT_ARRAY:
+            std::cout << "----------- PRINT ARRAY -----------\n";
+
+            Print_employees(staff, staff_size);
+
+            std::cout << '\n';
+            break;
+
+        case ADD_ELEMENT:
+            std::cout << "----------- ADD ELEMENT -----------\n";
+
+            int n;
+            std::cout << "Enter record number: ";
+            std::cin >> n;
+            Add_employee(staff, staff_size, Read_selected(fs, n));
+
+            std::cout << "ADDED: " << staff[staff_size - 1] << "\n\n";
+            break;
+
+        case CLEAR_CONSOLE:
+            system("cls");
+            break;
+
+        case QUIT_PROGRAM:
+            run = false;
+            break;
+
+        default:
+            std::cout << "There is no such command.\n";
+            break;
+
+        }
 
     }
 
@@ -93,5 +136,15 @@ Employee Read_selected(std::fstream& fs, const uint32_t n)
     fs.seekg(0, std::ios::beg);
 
     return t;
+
+}
+
+void Print_employees(const Employee* const staff, const uint32_t size)
+{
+
+    for (int i = 0; i < size; ++i)
+    {
+        std::cout << staff[i] << '\n';
+    }
 
 }
