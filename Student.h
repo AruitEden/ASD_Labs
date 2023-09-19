@@ -34,6 +34,9 @@ public:
 	Student& operator=(const Student& stud);
 
 
-	void Print();
+	friend std::istream& operator >> (std::istream& is, Student& student);
+
+	friend std::ostream& operator << (std::ostream& os, const Student& student);
+
 };
 

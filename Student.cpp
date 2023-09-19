@@ -67,9 +67,19 @@ Student& Student::operator=(const Student& stud)
 
 
 
-void Student::Print()
+std::istream& operator>>(std::istream& is, Student& student)
 {
-	std::cout << "Group: "<< GetGroup()<<"\tName: " << GetName() << "\tGPA: " << GetGPA();
+	getline(is, student.group, ',');
+	getline(is, student.name, ',');
+	is >> student.gpa;
+	return is;
 }
+
+
+std::ostream& operator<<(std::ostream& os, const Student& student)
+{
+	os << "Group: " << student.group << "\tName: " << student.name << "\tGPA: " << student.gpa;
+}
+
 
 

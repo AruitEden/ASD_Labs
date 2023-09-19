@@ -5,8 +5,7 @@ void PrintArray(Student* arr, int size)
 {
     for (int i = 0; i < size; ++i)
     {
-        arr[i].Print();
-        std::cout << std::endl;
+        std::cout << arr[i] << std::endl;
     }
 }
 
@@ -73,20 +72,57 @@ void MergSort(Student* arr, int start, int end)
 }
 
 
+
+void push_back(Student*& arr, int& size, const Student value)
+{
+    Student* NewArr = new Student[size + 1];
+
+    for (int i = 0; i < size; ++i)
+    {
+        NewArr[i] = arr[i];
+    }
+
+    NewArr[size] = value;
+    size++;
+
+    delete[] arr;
+
+    arr = NewArr;
+}
+
+
 int main()
 {
+    int n = 3;
     Student A("PZ-22-1", "Hanna", 7);
     Student B("PZ-22-2", "Oleg", 3);
     Student C("PZ-22-3", "Ruslan", 6);
-    A.Print();
+
+
+    Student *arr = new Student [n]{ A, B, C };
+    PrintArray(arr, n);
+
     std::cout << std::endl << std::endl;
 
-    Student arr[3]{ A, B, C };
-    PrintArray(arr, 3);
+    MergSort(arr, 0, n-1);
+    PrintArray(arr, n);
 
     std::cout << std::endl << std::endl;
 
-    MergSort(arr, 0, 2);
-    PrintArray(arr, 3);
+    push_back(arr, n, B);
+    PrintArray(arr, n);
 
+    std::cout << std::endl;
+
+    Student D;
+    std::cin >> D;
+
+    std::cout << std::endl << std::endl;
+
+    push_back(arr, n, D);
+    MergSort(arr, 0, n - 1);
+    PrintArray(arr, n);
+
+
+    delete[] arr;
 }
