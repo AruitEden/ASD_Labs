@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <iostream>
 
 class Student
 {
@@ -27,5 +28,9 @@ public:
 
 	Student();
 	Student(std::string group, std::string name, int gpa);
+
+
+
+	void Print();
 };
 

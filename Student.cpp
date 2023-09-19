@@ -52,3 +52,10 @@ Student::Student(std::string group, std::string name, int gpa)
 }
 
 
+
+void Student::Print()
+{
+	std::cout << "Group: "<< GetGroup()<<"\tName: " << GetName() << "\tGPA: " << GetGPA();
+}
+
+
