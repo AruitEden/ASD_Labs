@@ -7,61 +7,49 @@
 
 
 
+void Add_employee(Employee*& staff, uint32_t& size, const Employee& emp);
+
+Employee Read_selected(std::fstream &fs, const uint32_t n);
+
+
+
 
 
 int main()
 {
 
-    const int STAFF_COUNT = 10;
+    std::fstream fs("Data_pool.csv");
 
-    Employee staff[STAFF_COUNT]
+    if (!fs) 
     {
-        Employee("Andriy", "Bulka", "Gennadiyovych", DateTime{1993, 3, 26}, Gender::Female),
-        Employee("Bogdan", "Kuzmenko", "Vasylovych", DateTime{2000, 11, 12}, Gender::Female),
-        Employee("Vasyl", "Gordienko", "Mykhailovych", DateTime{2001, 5, 12}, Gender::Female),
-        Employee("Olga", "Petrova", "Andriivna", DateTime{2003, 4, 28}, Gender::Male),
-        Employee("Natalia", "Kuzmenko", "Oleksiivna", DateTime{1994, 2, 14}, Gender::Male),
-        Employee("Alexei", "Bushmanov", "Serhiyovych", DateTime{1992, 7, 22}, Gender::Female),
-        Employee("Hanna", "Komarova", "Volodymyrivna", DateTime{1994, 10, 24}, Gender::Male),
-        Employee("Artem", "Movchan", "Yehorovych", DateTime{1997, 5, 17}, Gender::Female),
-        Employee("Gennady", "Komarov", "Ivanovych", DateTime{1998, 8, 4}, Gender::Female),
-        Employee("Igor", "Zomich", "Oleksiyovych", DateTime{1995, 3, 18}, Gender::Female),
-    };
-
-
-
-    for (int i = 0; i < STAFF_COUNT; ++i) 
-    {
-        std::cout << staff[i] << '\n';
+        std::cerr << "Couldn't open the file\n";
+        return -1;
     }
 
-    Sort_by_surname(staff, STAFF_COUNT);
+    uint32_t staff_size = 0;
+    Employee* staff = new Employee[staff_size];
+    
+    int n;
 
-
-
-    std::cout << "-------AFTER SORT-------\n\n";
-
-    for (int i = 0; i < STAFF_COUNT; ++i)
+    while (true) 
     {
-        std::cout << staff[i] << '\n';
+
+        std::cout << "Enter n: ";
+        std::cin >> n;
+        std::cin.ignore(1);
+
+        Add_employee(staff, staff_size, Read_selected(fs, n));
+
+        std::cout << "\n\n";
+
+        for (size_t i = 0; i < staff_size; i++)
+        {
+            std::cout << staff[i] << '\n';
+        }
+
+        std::cout << "\n\n";
+
     }
-
-
-
-    std::cout << "-------NAMESAKES-------\n\n";
-
-    uint32_t n_size = 0;
-
-    Employee* namesakes = Find_namesakes(staff, STAFF_COUNT, n_size);
-
-    for (int i = 0; i < n_size; ++i)
-    {
-        std::cout << namesakes[i] << '\n';
-    }
-
-    delete[] namesakes;
-
-
 
     return 0;
 
@@ -71,5 +59,39 @@ int main()
 
 
 
+void Add_employee(Employee*& staff, uint32_t& size, const Employee& emp)
+{
 
+    Employee* new_staff = new Employee[size + 1];
 
+    for (int i = 0; i < size; ++i)
+    {
+        new_staff[i] = staff[i];
+    }
+
+    new_staff[size] = emp;
+
+    delete[] staff;
+
+    ++size;
+
+    staff = new_staff;
+
+}
+
+Employee Read_selected(std::fstream& fs, const uint32_t n)
+{
+    
+    Employee t;
+
+    for (size_t i = 0; i < n; ++i)
+    {
+        fs >> t;
+    }
+
+    fs.clear();
+    fs.seekg(0, std::ios::beg);
+
+    return t;
+
+}

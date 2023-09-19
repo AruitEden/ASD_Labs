@@ -118,7 +118,7 @@ Employee* Find_namesakes(const Employee* const employees, const uint32_t size, u
     }
 
 
-    const Employee** arr = new const Employee * [size];
+    const Employee** arr = new const Employee* [size];
 
     bool equality = false;
     for (int i = 1; i < size; ++i)
