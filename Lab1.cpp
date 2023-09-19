@@ -21,7 +21,9 @@ enum Menu_commands
     PRINT_ARRAY = 'p',
     ADD_ELEMENT = 'a',
     CLEAR_CONSOLE = 'c',
-    QUIT_PROGRAM = 'q'
+    QUIT_PROGRAM = 'q',
+    PRINT_NAMESAKES = 'n',
+    SORT_ARRAY = 's'
 };
 
 
@@ -41,6 +43,9 @@ int main()
 
     uint32_t staff_size = 0;
     Employee* staff = new Employee[staff_size];
+
+    uint32_t namesakes_size = 0;
+    Employee* namesakes = new Employee[namesakes_size];
     
 
     char command;
@@ -67,6 +72,7 @@ int main()
             std::cout << '\n';
             break;
 
+
         case ADD_ELEMENT:
             std::cout << "----------- ADD ELEMENT -----------\n";
 
@@ -78,13 +84,36 @@ int main()
             std::cout << "ADDED: " << staff[staff_size - 1] << "\n\n";
             break;
 
+
+        case PRINT_NAMESAKES:
+            std::cout << "----------- PRINT NAMESAKES -----------\n";
+
+            delete[] namesakes;
+            namesakes_size = 0;
+            namesakes = Find_namesakes(staff, staff_size, namesakes_size);
+            Print_employees(namesakes, namesakes_size);
+
+            std::cout << '\n';
+            break;
+
+
+        case SORT_ARRAY:
+
+            Sort_by_surname(staff, staff_size);
+
+            std::cout << "----------- ARRAY SORTED -----------\n\n";
+            break;
+
+
         case CLEAR_CONSOLE:
             system("cls");
             break;
 
+
         case QUIT_PROGRAM:
             run = false;
             break;
+
 
         default:
             std::cout << "There is no such command.\n";
