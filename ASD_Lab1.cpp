@@ -10,6 +10,22 @@ void PrintArray(Student* arr, int size)
 }
 
 
+void Range(Student* arr, int size, int count)
+{
+
+    if (count > size)
+    {
+        std::cout << "Это больше чем количество элементов в массиве\n";
+        return;
+    }
+
+    for (int i = 0; i < count; ++i)
+    {
+        std::cout << arr[i] << std::endl;
+    }
+}
+
+
 
 void Merg(Student* arr, int start, int end, int mid)
 {
@@ -60,11 +76,10 @@ void Merg(Student* arr, int start, int end, int mid)
 
 void MergSort(Student* arr, int start, int end)
 {
-    int mid;
-
+   
     if (start < end)
     {
-        mid = (start + end) / 2;
+        int mid = (start + end) / 2;
         MergSort(arr, start, mid);
         MergSort(arr, mid + 1, end);
         Merg(arr, start, end, mid);
@@ -93,35 +108,84 @@ void push_back(Student*& arr, int& size, const Student value)
 
 int main()
 {
+    setlocale(LC_ALL, "ru");
+
     int n = 3;
-    Student A("PZ-22-1", "Hanna", 7);
-    Student B("PZ-22-2", "Oleg", 3);
-    Student C("PZ-22-3", "Ruslan", 6);
+    Student A("PZ-22-1", "Olga Petrova Andriivna", 70);
+    Student B("PZ-22-2", "Gennady Komarov Ivanovych", 30);
+    Student C("PZ-22-3", "Igor Zomich Oleksiyovych", 60);
 
 
     Student *arr = new Student [n]{ A, B, C };
-    PrintArray(arr, n);
+
+
+
+    std::cout << "Введите A - если вы хотитк добавить элемент\nВведите S - если хотите отсортировать массив\n";
+    std::cout << "Введите R - Что бы увдеть заданое колтсество лучших учинеков (после этого массив будет отсортирван)\n";
+    std::cout << "Ввкдите P - если хотите вывести массив\nВведите E - если хотитк окончить работу с рограммой";
+
 
     std::cout << std::endl << std::endl;
 
-    MergSort(arr, 0, n-1);
-    PrintArray(arr, n);
+    char action;
 
-    std::cout << std::endl << std::endl;
+    while (true)
+    {
+        std::cout << "\n\nВведите операцию: ";
+        std::cin >> action;
+        std::cout << std::endl;
 
-    push_back(arr, n, B);
-    PrintArray(arr, n);
 
-    std::cout << std::endl;
+        switch (action)
+        {
 
-    Student D;
-    std::cin >> D;
+        case('A'):
+        {
+            Student student;
+            std::cout << "Ввндите данные о студенте через запятую (группа, ИФО, средний бал):\n";
+            std::cin.ignore();
+            std::cin >> student;
 
-    std::cout << std::endl << std::endl;
+            push_back(arr, n, student);
+            break;
 
-    push_back(arr, n, D);
-    MergSort(arr, 0, n - 1);
-    PrintArray(arr, n);
+        }
+
+        case('S'):
+        {
+            MergSort(arr, 0, n - 1);
+            break;
+        }
+
+        case('R'):
+        {
+            int count;
+            std::cout << "Введитк количество лучших студентов которое хотите увидеть: ";
+            std::cin >> count;
+
+            MergSort(arr, 0, n - 1);
+            Range(arr, n, count);
+            break;
+        }
+
+        case('P'):
+        {
+            PrintArray(arr, n);
+            break;
+
+        }
+
+        case('E'):
+        {
+            std::cout << "Хорошего дня";
+            return 0;
+        }
+
+        default:
+            std::cout << "Вы ввели незвестную команду. Попробуйте ещё раз\n";
+            break;
+        }
+    }
 
 
     delete[] arr;

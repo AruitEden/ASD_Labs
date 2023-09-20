@@ -70,6 +70,7 @@ Student& Student::operator=(const Student& stud)
 std::istream& operator>>(std::istream& is, Student& student)
 {
 	getline(is, student.group, ',');
+	is.ignore(1);
 	getline(is, student.name, ',');
 	is >> student.gpa;
 	return is;
@@ -79,6 +80,7 @@ std::istream& operator>>(std::istream& is, Student& student)
 std::ostream& operator<<(std::ostream& os, const Student& student)
 {
 	os << "Group: " << student.group << "\tName: " << student.name << "\tGPA: " << student.gpa;
+	return os;
 }
 
 
