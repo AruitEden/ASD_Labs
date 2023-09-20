@@ -1,48 +1,41 @@
 #include "Student.h"
 
-std::string Student::GetGroup()
+const std::string& Student::GetGroup()const
 {
 	return group;
 }
 
-void Student::SetGroup(std::string group)
+void Student::SetGroup(const std::string group)
 {
 	this->group = group;
 }
 
 
 
-std::string Student::GetName()
+const std::string& Student::GetName()const
 {
 	return name;
 }
 
-void Student::SetName(std::string name)
+void Student::SetName(const std::string name)
 {
 	this->name = name;
 }
 
 
 
-int Student::GetGPA()
+int Student::GetGPA()const
 {
 	return gpa;
 }
 
-void Student::SetGPA(int gpa)
+void Student::SetGPA(const int gpa)
 {
 	this->gpa = gpa;
 }
 
 
 
-
-Student::Student()
-{
-	group = "";
-	name = "";
-	gpa = 0;
-}
 
 Student::Student(std::string group, std::string name, int gpa)
 {
@@ -73,6 +66,7 @@ std::istream& operator>>(std::istream& is, Student& student)
 	is.ignore(1);
 	getline(is, student.name, ',');
 	is >> student.gpa;
+	is.ignore(1);
 	return is;
 }
 

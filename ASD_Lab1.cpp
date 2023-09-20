@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 #include "Student.h"
 
-void PrintArray(Student* arr, int size)
+void PrintArray(const Student* arr, const int size)
 {
     for (int i = 0; i < size; ++i)
     {
@@ -10,7 +10,7 @@ void PrintArray(Student* arr, int size)
 }
 
 
-void Range(Student* arr, int size, int count)
+void Range(const Student* arr, const int size, const int count)
 {
 
     if (count > size)
@@ -88,7 +88,7 @@ void MergSort(Student* arr, int start, int end)
 
 
 
-void push_back(Student*& arr, int& size, const Student value)
+void push_back(Student*& arr, int& size, const Student& value)
 {
     Student* NewArr = new Student[size + 1];
 
@@ -122,7 +122,8 @@ int main()
 
     std::cout << "Введите A - если вы хотитк добавить элемент\nВведите S - если хотите отсортировать массив\n";
     std::cout << "Введите R - Что бы увдеть заданое колтсество лучших учинеков (после этого массив будет отсортирван)\n";
-    std::cout << "Ввкдите P - если хотите вывести массив\nВведите E - если хотитк окончить работу с рограммой";
+    std::cout << "Ввкдите P - если хотите вывести массив\nВведите C - если хотите очистить консоль\n";
+    std::cout << "Введите E - если хотитк окончить работу с рограммой";
 
 
     std::cout << std::endl << std::endl;
@@ -173,6 +174,12 @@ int main()
             PrintArray(arr, n);
             break;
 
+        }
+
+        case('C'):
+        {
+            system("cls");
+            break;
         }
 
         case('E'):

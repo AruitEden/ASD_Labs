@@ -13,21 +13,20 @@ private:
 
 public:
 
-	std::string GetGroup();
-	void SetGroup(std::string group);
+	const std::string& GetGroup()const;
+	void SetGroup(const std::string group);
 
 
-	std::string GetName();
-	void SetName(std::string name);
+	const std::string& GetName()const;
+	void SetName(const std::string name);
 
 
-	int GetGPA();
-	void SetGPA(int gpa);
+	int GetGPA()const;
+	void SetGPA(const int gpa);
 
 
 
-	Student();
-	Student(std::string group, std::string name, int gpa);
+	Student(std::string group = "", std::string name = "", int gpa = 0);
 
 
 
