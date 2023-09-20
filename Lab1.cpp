@@ -13,6 +13,8 @@ Employee Read_selected(std::fstream &fs, const uint32_t n);
 
 void Print_employees(const Employee* const staff, const uint32_t size);
 
+void Print_command_info();
+
 
 
 enum Menu_commands
@@ -23,7 +25,8 @@ enum Menu_commands
     CLEAR_CONSOLE = 'c',
     QUIT_PROGRAM = 'q',
     PRINT_NAMESAKES = 'n',
-    SORT_ARRAY = 's'
+    SORT_ARRAY = 's',
+    PRINT_HELP = 'h'
 };
 
 
@@ -50,6 +53,8 @@ int main()
 
     char command;
     bool run = true;
+
+    Print_command_info();
 
     while (run)
     {
@@ -107,6 +112,11 @@ int main()
 
         case CLEAR_CONSOLE:
             system("cls");
+            break;
+
+
+        case PRINT_HELP:
+            Print_command_info();
             break;
 
 
@@ -175,5 +185,18 @@ void Print_employees(const Employee* const staff, const uint32_t size)
     {
         std::cout << staff[i] << '\n';
     }
+
+}
+
+void Print_command_info() 
+{
+    std::cout << "Commands list:\n"
+        << "\'p\' - print array\n"
+        << "\'a\' - add element\n"
+        << "\'c\' - clear console\n"
+        << "\'q\' - quit program\n"
+        << "\'n\' - print namesakes(works only if the array is sorted)\n"
+        << "\'s\' - sort array\n"
+        << "\'h\' - print help\n\n\n";
 
 }

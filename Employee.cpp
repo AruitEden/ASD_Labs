@@ -69,7 +69,7 @@ void Sort_by_surname(Employee* employees, const uint32_t size)
 
         int j = i - 1;
 
-        for (j; j > 0 && employees[j].Get_second_name() > temp.Get_second_name(); --j)
+        for (j; j >= 0 && employees[j].Get_second_name() > temp.Get_second_name(); --j)
         {
 
             employees[j + 1] = employees[j];
