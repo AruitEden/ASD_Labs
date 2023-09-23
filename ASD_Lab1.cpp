@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <string>
 #include "Student.h"
 
 void PrintArray(const Student* arr, const int size)
@@ -8,6 +9,17 @@ void PrintArray(const Student* arr, const int size)
         std::cout << arr[i] << std::endl;
     }
 }
+
+
+void PrintHelp()
+{
+    std::cout << "Введите A - Если вы хотите добавить элемент\nВведите S - Если хотите отсортировать массив\n";
+    std::cout << "Введите R - Чтобы увидеть заданое количество лучших учеников (после этого массив будет отсортирован)\n";
+    std::cout << "Введите P - Если хотите вывести массив\nВведите C - Если хотите очистить консоль\n";
+    std::cout << "Введите E - Если хотите окончить работу с программой";
+    std::cout << std::endl << std::endl;
+}
+
 
 
 void Range(const Student* arr, const int size, const int count)
@@ -29,16 +41,18 @@ void Range(const Student* arr, const int size, const int count)
 
 void Merg(Student* arr, int start, int end, int mid)
 {
-    Student ara[sizeof(arr)];
+    Student *ara = new Student[(end - start) + 1];
     int start1 = start;
-    int start2 = start;
+    int start2 = 0;
     int start_mid = mid + 1;
+
 
     while (start1 <= mid && start_mid <= end)
     {
         if (arr[start1].GetGPA() > arr[start_mid].GetGPA())
         {
             ara[start2] = arr[start1];
+
             start1++;
             start2++;
         }
@@ -66,10 +80,12 @@ void Merg(Student* arr, int start, int end, int mid)
         start2++;
     }
 
-    for (int i = start; i < start_mid; ++i)
+    for (int i = start, j = 0; i < start_mid; ++i, ++j)
     {
-        arr[i] = ara[i];
+        arr[i] = ara[j];
     }
+
+    delete[] ara;
 }
 
 
@@ -88,21 +104,32 @@ void MergSort(Student* arr, int start, int end)
 
 
 
-void push_back(Student*& arr, int& size, const Student& value)
+void push_back(Student*& arr, int& size, int& capasity, const Student& value)
 {
-    Student* NewArr = new Student[size + 1];
-
-    for (int i = 0; i < size; ++i)
+    if (size < capasity)
     {
-        NewArr[i] = arr[i];
+        arr[size] = value;
+        size++;
     }
 
-    NewArr[size] = value;
-    size++;
+    else
+    {
+        capasity = (capasity == 0) ? capasity += 3 : capasity *= 2;
 
-    delete[] arr;
+        Student* NewArr = new Student[capasity];
 
-    arr = NewArr;
+        for (int i = 0; i < size; ++i)
+        {
+            NewArr[i] = arr[i];
+        }
+
+        NewArr[size] = value;
+        size++;
+
+        delete[] arr;
+
+        arr = NewArr;
+    }
 }
 
 
@@ -110,23 +137,20 @@ int main()
 {
     setlocale(LC_ALL, "ru");
 
-    int n = 3;
+    int capacity = 20;
+    int size = 20;
     Student A("PZ-22-1", "Olga Petrova Andriivna", 70);
     Student B("PZ-22-2", "Gennady Komarov Ivanovych", 30);
     Student C("PZ-22-3", "Igor Zomich Oleksiyovych", 60);
 
 
-    Student *arr = new Student [n]{ A, B, C };
+    Student *arr = new Student [capacity]{ A, B, C, A, B, C , A, B, C , A, B, C, A, A, A, C, C, A, A, B};
 
 
 
-    std::cout << "Введите A - если вы хотитк добавить элемент\nВведите S - если хотите отсортировать массив\n";
-    std::cout << "Введите R - Что бы увдеть заданое колтсество лучших учинеков (после этого массив будет отсортирван)\n";
-    std::cout << "Ввкдите P - если хотите вывести массив\nВведите C - если хотите очистить консоль\n";
-    std::cout << "Введите E - если хотитк окончить работу с рограммой";
+    PrintHelp();
 
 
-    std::cout << std::endl << std::endl;
 
     char action;
 
@@ -147,14 +171,14 @@ int main()
             std::cin.ignore();
             std::cin >> student;
 
-            push_back(arr, n, student);
+            push_back(arr, size, capacity, student);
             break;
 
         }
 
         case('S'):
         {
-            MergSort(arr, 0, n - 1);
+            MergSort(arr, 0, size - 1);
             break;
         }
 
@@ -164,14 +188,14 @@ int main()
             std::cout << "Введитк количество лучших студентов которое хотите увидеть: ";
             std::cin >> count;
 
-            MergSort(arr, 0, n - 1);
-            Range(arr, n, count);
+            MergSort(arr, 0, size - 1);
+            Range(arr, size, count);
             break;
         }
 
         case('P'):
         {
-            PrintArray(arr, n);
+            PrintArray(arr, size);
             break;
 
         }
@@ -179,6 +203,7 @@ int main()
         case('C'):
         {
             system("cls");
+            PrintHelp();
             break;
         }
 
