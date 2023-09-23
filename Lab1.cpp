@@ -7,7 +7,7 @@
 
 
 
-void Add_employee(Employee*& staff, uint32_t& size, const Employee& emp);
+void Add_employee(Employee*& staff, uint32_t& size, uint32_t& capacity, const Employee& emp);
 
 Employee Read_selected(std::fstream &fs, const uint32_t n);
 
@@ -44,8 +44,8 @@ int main()
     }
 
 
-    uint32_t staff_size = 0;
-    Employee* staff = new Employee[staff_size];
+    uint32_t staff_capacity = 0, staff_size = 0;
+    Employee* staff = new Employee[staff_capacity];
 
     uint32_t namesakes_size = 0;
     Employee* namesakes = new Employee[namesakes_size];
@@ -84,7 +84,7 @@ int main()
             int n;
             std::cout << "Enter record number: ";
             std::cin >> n;
-            Add_employee(staff, staff_size, Read_selected(fs, n));
+            Add_employee(staff, staff_size, staff_capacity, Read_selected(fs, n));
 
             std::cout << "ADDED: " << staff[staff_size - 1] << "\n\n";
             break;
@@ -141,23 +141,35 @@ int main()
 
 
 
-void Add_employee(Employee*& staff, uint32_t& size, const Employee& emp)
+void Add_employee(Employee*& staff, uint32_t& size, uint32_t& capacity, const Employee& emp)
 {
 
-    Employee* new_staff = new Employee[size + 1];
-
-    for (int i = 0; i < size; ++i)
+    if (size < capacity) 
     {
-        new_staff[i] = staff[i];
+        staff[size] = emp;
+        ++size;
     }
+    else 
+    {
 
-    new_staff[size] = emp;
+        capacity = (capacity == 0) ? ++capacity : capacity *= 2;
 
-    delete[] staff;
+        Employee* new_staff = new Employee[capacity];
 
-    ++size;
+        for (int i = 0; i < size; ++i)
+        {
+            new_staff[i] = staff[i];
+        }
 
-    staff = new_staff;
+        new_staff[size] = emp;
+
+        ++size;
+
+        delete[] staff;
+
+        staff = new_staff;
+
+    }
 
 }
 
