@@ -60,7 +60,7 @@ Student& Student::operator=(const Student& stud)
 
 
 
-std::istream& operator>>(std::istream& is, Student& student)
+ std::istream& operator>>(std::istream& is, Student& student)
 {
 	getline(is, student.group, ',');
 	is.ignore(1);
