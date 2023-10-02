@@ -12,45 +12,124 @@ protected:
 
 	T* m_element;
 
+	
 
-public:
 
-	T& operator*() = 0;
-	const T& operator*() const = 0;
+
+	T& operator*() 
+	{
+		return *m_element;
+	}
+	T& operator->()
+	{
+		return *m_element;
+	}
+
+
+
+	Iterator<T, S>& operator++() 
+	{
+		return *this;
+	}
+
+	Iterator<T, S> operator++(int) 
+	{
+		return *this;
+	}
+
+
+
+	Iterator<T, S>& operator--() 
+	{
+		return *this;
+	}
+
+	Iterator<T, S> operator--(int) 
+	{
+		return *this;
+	}
+
+
+
+	bool operator==(const Iterator& other)
+	{
+		return true;
+	}
+
+	bool operator!=(const Iterator& other)
+	{
+		return true;
+	}
 
 };
 
-//template <class T, class C>
-//class Iterator
-//{
-//protected:
-//
-//	C* collection;
-//
-//public:
-//
-//	virtual void push_back(const T& element) = 0;
-//	virtual void push_front(const T& element) = 0;
-//
-//};
-//
-//
-//
-//
-//
-//template <class T>
-//class List_iterator : Iterator<T, Forward_list<T>>
-//{
-//protected:
-//
-//	virtual void push_front(const T& element) override {}
-//	using Iterator<T, Forward_list<T>>::push_front;
-//
-//public:
-//
-//	virtual void push_back(const T& element) override 
-//	{
-//		std::cout << "push_back\n";
-//	}
-//
-//};
+
+
+
+
+template<class T, class S>
+class Const_iterator
+{
+
+protected:
+
+	const T* m_element;
+
+
+
+
+
+	const T& operator*()
+	{
+		return *m_element;
+	}
+	const T& operator->()
+	{
+		return *m_element;
+	}
+
+
+
+	Const_iterator<T, S>& operator++()
+	{
+		return *this;
+	}
+
+	Const_iterator<T, S> operator++(int)
+	{
+		return *this;
+	}
+
+
+
+	Const_iterator<T, S>& operator--()
+	{
+		return *this;
+	}
+
+	Const_iterator<T, S> operator--(int)
+	{
+		return *this;
+	}
+
+
+
+	bool operator==(const Const_iterator& other)
+	{
+		return true;
+	}
+
+	bool operator!=(const Const_iterator& other)
+	{
+		return true;
+	}
+
+};
+
+
+
+
+
+
+
+
