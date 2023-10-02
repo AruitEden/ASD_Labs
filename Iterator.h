@@ -16,52 +16,31 @@ protected:
 
 
 
-	T& operator*() 
-	{
-		return *m_element;
-	}
-	T& operator->()
-	{
-		return *m_element;
-	}
+	T& operator*();
+
+	T& operator->();
 
 
 
-	Iterator<T, S>& operator++() 
-	{
-		return *this;
-	}
+	Iterator<T, S>& operator++();
 
-	Iterator<T, S> operator++(int) 
-	{
-		return *this;
-	}
+	Iterator<T, S> operator++(int);
 
 
 
-	Iterator<T, S>& operator--() 
-	{
-		return *this;
-	}
+	Iterator<T, S>& operator--();
 
-	Iterator<T, S> operator--(int) 
-	{
-		return *this;
-	}
+	Iterator<T, S> operator--(int);
 
 
 
-	bool operator==(const Iterator& other)
-	{
-		return true;
-	}
+	bool operator==(const Iterator& other);
 
-	bool operator!=(const Iterator& other)
-	{
-		return true;
-	}
+	bool operator!=(const Iterator& other);
 
 };
+
+
 
 
 
@@ -79,50 +58,27 @@ protected:
 
 
 
-	const T& operator*()
-	{
-		return *m_element;
-	}
-	const T& operator->()
-	{
-		return *m_element;
-	}
+	const T& operator*();
+
+	const T& operator->();
 
 
 
-	Const_iterator<T, S>& operator++()
-	{
-		return *this;
-	}
+	Const_iterator<T, S>& operator++();
 
-	Const_iterator<T, S> operator++(int)
-	{
-		return *this;
-	}
+	Const_iterator<T, S> operator++(int);
 
 
 
-	Const_iterator<T, S>& operator--()
-	{
-		return *this;
-	}
+	Const_iterator<T, S>& operator--();
 
-	Const_iterator<T, S> operator--(int)
-	{
-		return *this;
-	}
+	Const_iterator<T, S> operator--(int);
 
 
 
-	bool operator==(const Const_iterator& other)
-	{
-		return true;
-	}
+	bool operator==(const Const_iterator& other);
 
-	bool operator!=(const Const_iterator& other)
-	{
-		return true;
-	}
+	bool operator!=(const Const_iterator& other);
 
 };
 
