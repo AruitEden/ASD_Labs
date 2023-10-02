@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include "Iterator.h"
 
 
 
@@ -13,20 +14,21 @@ class Forward_list
 
 protected:
 
-	template<class T>
+	using node_T = T;
+
 	class Node
 	{
 
 	private:
 
-		T* const m_data;
-		Node<T>* m_next;
+		node_T* const m_data;
+		Node* m_next;
 
 
 	public:
 
-		Node(Node<T>* next, const T& data) :
-			m_next(next), m_data(new T(data)) {}
+		Node(Node* const next, const node_T& data) :
+			m_next(next), m_data(new node_T(data)) {}
 
 
 
@@ -37,27 +39,28 @@ protected:
 
 
 
-		bool HasNext() const {
+		bool HasNext() const 
+		{
 			return m_next != nullptr ? true : false;
 		}
 
-		Node<T>* GetNext() {
+		Node* GetNext() const 
+		{
 			return m_next;
 		}
 
-		Node<T> const* GetNext() const {
-			return m_next;
-		}
-
-		void SetNext(Node<T>* next) {
+		void SetNext(Node* next) 
+		{
 			m_next = next;
 		}
 
-		T& GetData() {
+		node_T& GetData() 
+		{
 			return *m_data;
 		}
 
-		const T& GetData() const {
+		const node_T& GetData() const 
+		{
 			return *m_data;
 		}
 
@@ -65,7 +68,25 @@ protected:
 	
 
 
+	using List_iterator = Iterator<T, Forward_list<T>>;
 
+	
+
+	
+
+};
+
+
+
+
+
+template <class T>
+class Iterator<T, Forward_list<T>> 
+{
+
+protected:
+
+	T* m_element;
 
 };
 
