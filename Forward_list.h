@@ -20,8 +20,6 @@ private:
 
 protected:
 
-	using List_iterator = Iterator<T, Forward_list<T>>;
-
 	using node_T = T;
 
 
@@ -78,7 +76,9 @@ protected:
 
 
 
+public:
 
+	using iterator_trait = typename Iterator<T, Forward_list<T>>;
 
 
 
@@ -86,6 +86,23 @@ protected:
 };
 
 
+
+template <typename T>
+struct Forward_list_traits
+{
+
+	using collection_type = typename Forward_list<T>;
+
+	using iterator_type = typename collection_type::iterator_trait;
+
+};
+
+
+
+
+
+template <typename T>
+using List_iterator = typename Forward_list_traits<T>::iterator_type;
 
 
 
@@ -102,7 +119,7 @@ protected:
 
 public:
 
-
+	
 
 	
 
