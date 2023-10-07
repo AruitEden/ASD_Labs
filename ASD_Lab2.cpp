@@ -1,6 +1,6 @@
 ﻿#include <iostream>
 #include <string>
-
+#include "Forward_list.h"
 
 
 
@@ -29,75 +29,12 @@ void Print_command_info();
 int main()
 {
 
-    char command;
-    bool run = true;
-    Print_command_info();
+    /*Iterator<int, Forward_list<int>> it;
 
-    while (run)
-    {
+    it.Foo();*/
 
-        std::cout << "Enter command: ";
-        if (std::cin.peek() == '\n') 
-        {
-            std::cin.ignore(1);
-        }
-        std::cin >> command;
-
-        switch ((Menu_commands)command)
-        {
-
-
-        case PRINT_COLLECTION:
-            std::cout << "----------- PRINT COLLECTION -----------\n";
-
-            //...
-
-            std::cout << '\n';
-            break;
-
-
-
-        case ADD_ELEMENT:
-            std::cout << "----------- ADD ELEMENT -----------\n";
-
-            //...
-
-            //std::cout << "ADDED: " << ... << "\n\n";
-            break;
-
-
-
-        case SORT_COLLECTION:
-
-            //...
-
-            std::cout << "----------- COLLECTION SORTED -----------\n\n";
-            break;
-
-
-
-        case CLEAR_CONSOLE:
-            system("cls");
-            break;
-
-
-        case PRINT_HELP:
-            Print_command_info();
-            break;
-
-
-        case QUIT_PROGRAM:
-            run = false;
-            break;
-
-
-        default:
-            std::cout << "There is no such command.\n";
-            break;
-
-        }
-
-    }
+    B<int> b;
+    b.Foo();
 
     return 0;
 

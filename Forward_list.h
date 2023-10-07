@@ -12,23 +12,25 @@ template <class T>
 class Forward_list
 {
 
+
 protected:
 
-	using node_T = T;
+	using List_iterator = Iterator<T, Forward_list<T>>;
 
+	template<class T>
 	class Node
 	{
 
 	private:
 
-		node_T* const m_data;
+		T* const m_data;
 		Node* m_next;
 
 
 	public:
 
-		Node(Node* const next, const node_T& data) :
-			m_next(next), m_data(new node_T(data)) {}
+		Node(Node* const next, const T& data) :
+			m_next(next), m_data(new T(data)) {}
 
 
 
@@ -54,22 +56,27 @@ protected:
 			m_next = next;
 		}
 
-		node_T& GetData() 
+		T& GetData() 
 		{
 			return *m_data;
 		}
 
-		const node_T& GetData() const 
+		const T& GetData() const 
 		{
 			return *m_data;
 		}
 
 	};
+
+
+	Node m_head;
 	
+	template <class T, class S> class Iterator;
 
+	template <class T, class S>
+	friend class Iterator;
 
-	using List_iterator = Iterator<T, Forward_list<T>>;
-
+	static int a;
 	
 
 	
@@ -78,15 +85,95 @@ protected:
 
 
 
+template<class T> class A;
+
+template<class T> class B;
+
+template<class T>
+class A 
+{
+
+	template<class T> friend class B;
+
+
+protected:
+
+	class Type
+	{
+		
+	public:
+
+		int _a;
+		Type(int a):_a(a){}
+
+		operator int()
+		{
+			return _a;
+		}
+
+	};
+
+private:
+	static int a;
+
+protected:
+	static int b;
+
+public:
+	static int c;
+
+	void Foo()
+	{
+		
+	}
+
+};
+
+
+template <class T>
+class B 
+{
+
+private:
+	static int a;
+
+protected:
+	static int b;
+
+public:
+	static int c;
+
+	using A_Type = typename A<T>::Type;
+
+	void Foo()
+	{
+		A_Type type = 6;
+		std::cout << type << '\n';
+	}
+	
+
+};
+
+
 
 
 template <class T>
 class Iterator<T, Forward_list<T>> 
 {
 
+
+
 protected:
 
 	T* m_element;
+
+
+public:
+
+	void Foo()
+	{
+		
+	}
 
 };
 
