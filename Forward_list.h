@@ -108,9 +108,22 @@ public:
 
 	Forward_list<T>() : m_size(0), m_head(nullptr) {}
 
-	Forward_list<T>(const Forward_list<T>& other) : m_size(other.m_size)
+	Forward_list<T>(Forward_list<T>& other) : m_size(other.m_size)
 	{
+		if(m_size == 0)
+		{
+			m_head = nullptr;
+			return;
+		}
 
+		m_head = new Node(other.m_head->Get_data(), other.m_head->Get_next());
+		Node* temp = m_head;
+
+		for (size_t i = 0; i < m_size - 1; ++i)
+		{
+			temp->Set_next(new Node(temp->Get_next()->Get_data(), temp->Get_next()->Get_next()));
+			temp = temp->Get_next();
+		}
 	}
 
 	~Forward_list<T>() {}; //TODO
@@ -120,6 +133,15 @@ public:
 	void Push_front(const T& value)
 	{
 		m_head = new Node(value, m_head);
+		++m_size;
+	}
+
+	void Push_back(const T& value)
+	{
+		List_iterator<T> current = begin();
+		for (size_t i = 0; i < m_size - 1; ++i, ++current);
+
+		current.m_element->Set_next(new Node(value, nullptr));
 		++m_size;
 	}
 
@@ -334,6 +356,11 @@ public:
 	}
 
 };
+
+
+
+
+
 
 
 
