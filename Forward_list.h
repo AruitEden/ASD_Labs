@@ -40,7 +40,7 @@ private:
 
 	template<class T, class S> friend class Iterator;
 
-	template<class T> friend struct Forward_list_traits;
+	template<typename T> friend struct Forward_list_traits;
 	
 
 protected:
@@ -58,8 +58,8 @@ protected:
 
 	public:
 
-		Node(Node* const next, const node_T& data) :
-			m_next(next), m_data(new node_T(data)) {}
+		Node(const node_T& data, Node* const next) :
+			m_data(new node_T(data)), m_next(next) {}
 
 
 
@@ -70,27 +70,27 @@ protected:
 
 
 
-		bool HasNext() const
+		bool Has_next() const
 		{
 			return m_next != nullptr ? true : false;
 		}
 
-		Node* GetNext() const
+		Node* Get_next() const
 		{
 			return m_next;
 		}
 
-		void SetNext(Node* next)
+		void Set_next(Node* next)
 		{
 			m_next = next;
 		}
 
-		node_T& GetData()
+		node_T& Get_data()
 		{
 			return *m_data;
 		}
 
-		const node_T& GetData() const
+		const node_T& Get_data() const
 		{
 			return *m_data;
 		}
@@ -112,7 +112,32 @@ public:
 
 
 
+	void Push_front(const T& value)
+	{
+		m_head = new Node(value, m_head);
+		++m_size;
+	}
 
+	void Insert(const List_iterator<T>& location)
+	{
+		Node* temp = location.m_element;
+	}
+
+
+
+	List_iterator<T> begin()
+	{
+		return List_iterator<T>(m_head);
+	}
+
+	List_iterator<T> end()
+	{
+		List_iterator<T> temp(m_head);
+		
+		for (int i = 0; i < m_size; ++i, ++temp);
+
+		return temp;
+	}
 
 };
 
@@ -132,21 +157,32 @@ protected:
 
 	Node_t* m_element;
 
-
-public:
-
-	Iterator<T, Forward_list<T>>()
-	{
+	template<class T> friend class Forward_list;
 
 
-		
-	}
 
 	Iterator<T, Forward_list<T>>(Node_t& node)
 	{
 
 		m_element = &node;
 
+	}
+
+	Iterator<T, Forward_list<T>>(Node_t* node)
+	{
+
+		m_element = node;
+
+	}
+
+
+public:
+
+	Iterator<T, Forward_list<T>>()
+	{
+
+		m_element = nullptr;
+		
 	}
 	
 	Iterator<T, Forward_list<T>>(const List_iterator<T>& other)
@@ -156,29 +192,35 @@ public:
 
 	}
 
+	List_iterator<T>& operator=(const List_iterator<T>& other)
+	{
+		m_element = other.m_element;
+	}
+
 
 
 	T& operator*()
 	{
-		return m_element->GetData();
+		return m_element->Get_data();
 	}
 
 	T& operator->()
 	{
-		return m_element->GetData();
+		return m_element->Get_data();
 	}
 	
 
 
 	List_iterator<T>& operator++()
 	{
-		return (m_element = m_element->GetNext());
+		m_element = m_element->Get_next();
+		return *this;
 	}
 
 	List_iterator<T> operator++(int)
 	{
-		Node_t temp = m_element;
-		m_element = m_element->GetNext();
+		List_iterator<T> temp(*this);
+		m_element = m_element->Get_next();
 		return temp;
 	}
 
