@@ -126,7 +126,19 @@ public:
 		}
 	}
 
-	~Forward_list<T>() {}; //TODO
+	Forward_list<T>(Forward_list<T>&& other)
+		: m_size(other.m_size), m_head(other.m_head)
+	{
+		other.m_size = 0;
+	}
+
+	~Forward_list<T>() 
+	{
+		for (size_t i = 0; i < m_size; ++i)
+		{
+			Pop_front();
+		}
+	}
 
 
 
@@ -138,6 +150,12 @@ public:
 
 	void Push_back(const T& value)
 	{
+		if(m_size < 1)
+		{
+			Push_front(value);
+			return;
+		}
+
 		List_iterator<T> current = begin();
 		for (size_t i = 0; i < m_size - 1; ++i, ++current);
 
@@ -209,7 +227,7 @@ public:
 
 		if (n == 1)
 		{
-			//clear; TODO
+			Clear();
 			return;
 		}
 
@@ -236,7 +254,13 @@ public:
 		delete temp;
 	}
 
-
+	void Clear() 
+	{
+		while(m_size > 0)
+		{
+			Pop_front();
+		}
+	}
 
 	size_t Size()
 	{
@@ -261,6 +285,25 @@ public:
 };
 
 
+
+template <typename T>
+Forward_list<T> Conjoin(Forward_list<T>& l1, Forward_list<T>& l2)
+{
+
+	Forward_list<T> conjoined;
+
+	for(T& i : l1)
+	{
+		conjoined.Push_back(i);
+	}
+	for(T& i : l2)
+	{
+		conjoined.Push_back(i);
+	}
+
+	return conjoined;
+
+}
 
 
 
