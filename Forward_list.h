@@ -108,6 +108,11 @@ public:
 
 	Forward_list<T>() : m_size(0), m_head(nullptr) {}
 
+	Forward_list<T>(const Forward_list<T>& other) : m_size(other.m_size)
+	{
+
+	}
+
 	~Forward_list<T>() {}; //TODO
 
 
@@ -118,11 +123,103 @@ public:
 		++m_size;
 	}
 
-	void Insert(const List_iterator<T>& location)
+	void Insert_after(List_iterator<T>& location, const T& value)
 	{
-		Node* temp = location.m_element;
+		location.m_element->Set_next(new Node(value, location.m_element->Get_next()));
+		++m_size;
 	}
 
+	void Move_by(List_iterator<T>& location, size_t n)
+	{
+		Node* temp = location.m_element;
+		List_iterator<T> current = begin();
+
+		if (current != location)
+		{
+			while (current.m_element->Get_next() != temp)
+			{
+				++current;
+			}
+		}
+		else
+		{
+			m_head = temp->Get_next();
+		}
+
+		current.m_element->Set_next(location.m_element->Get_next());
+
+		for (size_t i = 0; i < n; ++i, ++current);
+
+		temp->Set_next(current.m_element->Get_next());
+		current.m_element->Set_next(temp);
+	}
+
+	void Erase(List_iterator<T>& location)
+	{
+
+		Node* temp = location.m_element;
+		List_iterator<T> current = begin();
+
+		if(current == location)
+		{
+			Pop_front();
+			return;
+		}
+
+		while (current.m_element->Get_next() != temp)
+		{
+			++current;
+		}
+
+		current.m_element->Set_next(temp->Get_next());
+
+		--m_size;
+
+		delete temp;
+	}
+
+	void Erase_every(size_t n)
+	{
+		if(n == 0)
+		{
+			return;
+		}
+
+		if (n == 1)
+		{
+			//clear; TODO
+			return;
+		}
+
+		List_iterator<T> current = begin();
+
+		for(size_t i = 0, count = m_size / n; i < count; ++i)
+		{
+			for (size_t j = 0; j < n - 1; ++j, ++current);
+
+			List_iterator<T> temp = current++;
+
+			Erase(temp);
+		}
+	}
+
+	void Pop_front()
+	{
+		Node* temp = m_head;
+
+		m_head = m_head->Get_next();
+
+		--m_size;
+
+		delete temp;
+	}
+
+
+
+	size_t Size()
+	{
+		return m_size;
+	}
 
 
 	List_iterator<T> begin()
