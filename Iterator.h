@@ -34,9 +34,9 @@ protected:
 
 
 
-	bool operator==(const Iterator& other);
+	bool operator==(const Iterator<T, S>& other);
 
-	bool operator!=(const Iterator& other);
+	bool operator!=(const Iterator<T, S>& other);
 
 };
 

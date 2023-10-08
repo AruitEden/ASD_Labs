@@ -6,6 +6,29 @@
 
 
 
+template <class T>
+class Forward_list;
+
+
+
+template <typename T>
+struct Forward_list_traits
+{
+
+	using collection_type = typename Forward_list<T>;
+
+	using element_type = typename Forward_list<T>::Node;
+
+	using iterator_type = typename Iterator<T, Forward_list<T>>;
+
+};
+
+
+
+template <typename T>
+using List_iterator = typename Forward_list_traits<T>::iterator_type;
+
+
 
 
 
@@ -17,12 +40,12 @@ private:
 
 	template<class T, class S> friend class Iterator;
 
+	template<class T> friend struct Forward_list_traits;
+	
 
 protected:
 
 	using node_T = T;
-
-
 
 	class Node
 	{
@@ -76,9 +99,17 @@ protected:
 
 
 
+	size_t m_size;
+
+	Node* m_head;
+
+
 public:
 
-	using iterator_trait = typename Iterator<T, Forward_list<T>>;
+	Forward_list<T>() : m_size(0), m_head(nullptr) {}
+
+	~Forward_list<T>() {}; //TODO
+
 
 
 
@@ -87,22 +118,7 @@ public:
 
 
 
-template <typename T>
-struct Forward_list_traits
-{
 
-	using collection_type = typename Forward_list<T>;
-
-	using iterator_type = typename collection_type::iterator_trait;
-
-};
-
-
-
-
-
-template <typename T>
-using List_iterator = typename Forward_list_traits<T>::iterator_type;
 
 
 
@@ -112,16 +128,71 @@ class Iterator<T, Forward_list<T>>
 
 protected:
 
-	using Node_t = typename Forward_list<T>::Node;
+	using Node_t = typename Forward_list_traits<T>::element_type;
 
-	Node_t* element;
+	Node_t* m_element;
 
 
 public:
 
+	Iterator<T, Forward_list<T>>()
+	{
+
+
+		
+	}
+
+	Iterator<T, Forward_list<T>>(Node_t& node)
+	{
+
+		m_element = &node;
+
+	}
+	
+	Iterator<T, Forward_list<T>>(const List_iterator<T>& other)
+	{
+
+		m_element = other.m_element;
+
+	}
+
+
+
+	T& operator*()
+	{
+		return m_element->GetData();
+	}
+
+	T& operator->()
+	{
+		return m_element->GetData();
+	}
 	
 
-	
+
+	List_iterator<T>& operator++()
+	{
+		return (m_element = m_element->GetNext());
+	}
+
+	List_iterator<T> operator++(int)
+	{
+		Node_t temp = m_element;
+		m_element = m_element->GetNext();
+		return temp;
+	}
+
+
+
+	bool operator==(const List_iterator<T>& other)
+	{
+		return m_element == other.m_element;
+	}
+
+	bool operator!=(const List_iterator<T>& other)
+	{
+		return m_element != other.m_element;
+	}
 
 };
 
