@@ -44,6 +44,44 @@ protected:
 
 
 
+template<class T, class S>
+class Reverse_iterator
+{
+
+protected:
+
+	T* m_element;
+
+
+
+
+
+	T& operator*();
+
+	T& operator->();
+
+
+
+	Reverse_iterator<T, S>& operator++();
+
+	Reverse_iterator<T, S> operator++(int);
+
+
+
+	Reverse_iterator<T, S>& operator--();
+
+	Reverse_iterator<T, S> operator--(int);
+
+
+
+	bool operator==(const Reverse_iterator<T, S>& other);
+
+	bool operator!=(const Reverse_iterator<T, S>& other);
+
+};
+
+
+
 
 
 template<class T, class S>
