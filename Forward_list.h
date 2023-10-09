@@ -508,6 +508,30 @@ Forward_list<T> conjoin(Forward_list<T>& l1, Forward_list<T>& l2)
 
 }
 
+template <typename T>
+Forward_list<T> intersect(Forward_list<T>& l1, Forward_list<T>& l2)
+{
+
+	Forward_list<T> new_list;
+
+	//List_iterator<T> it_1 = l1.begin(), it_2 = l2.begin(), end_1 = l1.end(), end_2 = l2.end();
+
+	for(auto i : l1)
+	{
+		for (auto j : l2) 
+		{
+			if(i == j)
+			{
+				new_list.push_back(i);
+				break;
+			}
+		}
+	}
+
+	return std::move(new_list);
+
+}
+
 
 
 
