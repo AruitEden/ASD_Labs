@@ -70,27 +70,27 @@ protected:
 
 
 
-		bool Has_next() const
+		bool has_next() const
 		{
 			return m_next != nullptr ? true : false;
 		}
 
-		Node* Get_next() const
+		Node* get_next() const
 		{
 			return m_next;
 		}
 
-		void Set_next(Node* next)
+		void set_next(Node* next)
 		{
 			m_next = next;
 		}
 
-		node_T& Get_data()
+		node_T& get_data()
 		{
 			return *m_data;
 		}
 
-		const node_T& Get_data() const
+		const node_T& get_data() const
 		{
 			return *m_data;
 		}
@@ -105,90 +105,109 @@ protected:
 
 	
 
-	void Merge_sort(Forward_list<T>& lst, List_iterator<T> begin, List_iterator<T> end, size_t size)
+	/*void Insertion_sort()
 	{
-		if(size > 1)
+
+		bool changes = true;
+
+		while(changes)
 		{
-			List_iterator<T> mid = begin;
-			for (size_t i = 0; i < size / 2; ++i, ++mid);
-			Merge_sort(lst, begin, mid++, size);
-			Merge_sort(lst, mid, end, size);
-			Merge(lst, begin, mid, end);
+
+			changes = false;
+
+			List_iterator<T> new_pos;
+
+			for(List_iterator<T> i = new_pos; i.m_element->get_next() != nullptr; ++i)
+			{
+
+				if(*i > i.m_element->get_next()->get_data())
+				{
+					
+					changes = true;
+				}
+
+			}
+
 		}
+
+	}*/
+
+	/*
+	void Merge_sort(List_iterator<T> begin, List_iterator<T> end, size_t size)
+	{
+		if(size < 2)
+		{
+			return;
+		}
+
+		List_iterator<T> mid = begin;
+		for (size_t i = 0; i < size / 2; ++i, ++mid);
+
+		List_iterator<T> begin_1 = begin, end_1 = mid, begin_2 = mid, end_2 = end;
+		size_t size_1 = size / 2, size_2 = size / 2 + 1;
+
+		Merge_sort(begin_1, end_1, size_1);
+		Merge_sort(begin_2, end_2, size_2);
+		Merge(begin_1, end_1, size_1, begin_2, end_2, size_2);
+
 	}
 
-	void Merge(Forward_list<T>& lst, List_iterator<T> begin, List_iterator<T> mid, List_iterator<T> end)
+	void Merge(List_iterator<T> begin_1, List_iterator<T> end_1, size_t size_1, List_iterator<T> begin_2, List_iterator<T> end_2, size_t size_2)
 	{
 
-		Forward_list<T>  new_lst;
-		List_iterator<T> first_begin = begin;
-		List_iterator<T> first_end = mid;
-		List_iterator<T> second_begin = ++mid;
-		List_iterator<T> second_end = end;
+		Forward_list<T> new_lst;
 
-		bool active = true, write_first = true, write_second = true;
-		while(active)
+		bool new_head = (m_head == begin_1.m_element);
+
+		List_iterator<T> it1 = begin_1, it2 = begin_2;
+
+		while(it1 != end_1 || it2 != end_2)
 		{
-			if(first_begin == first_end)
+			if(*it1 > *it2)
 			{
-				write_first = false;
-				active = false;
-			}
-			if(second_begin == second_end)
-			{
-				write_second = false;
-				active = false;
-			}
-			if((*first_begin) > (*second_begin))
-			{
-				new_lst.Push_front(*first_begin);
-				++first_begin;
+				new_lst.push_front(*it1);
+				++it1;
 			}
 			else
 			{
-				new_lst.Push_front(*second_begin);
-				++second_begin;
+				new_lst.push_front(*it2);
+				++it2;
 			}
 		}
 
-		active = true;
-		if(write_first) 
+		while(it1 != end_1)
 		{
-			while(active) 
-			{
-				new_lst.Push_front(*first_begin);
-				++first_begin;
-
-				if (first_begin == first_end)
-				{
-					new_lst.Push_front(*first_begin);
-					write_first = false;
-					active = false;
-				}
-			}
+			new_lst.push_front(*it1);
+			++it1;
 		}
-
-		active = true;
-		if (write_second)
+		while (it2 != end_2)
 		{
-			while (active)
-			{
-				new_lst.Push_front(*second_begin);
-				++second_begin;
-
-				if (second_begin == second_end)
-				{
-					new_lst.Push_front(*second_begin);
-					write_first = false;
-					active = false;
-				}
-			}
+			new_lst.push_front(*it2);
+			++it2;
 		}
 
-		lst = std::move(new_lst);
+		for(auto i : new_lst)
+		{
+			std::cout << i << '\n';
+		}
+
+		//.end().m_element = end_2.m_element;
+
+		Forward_list<T> temp;
+		temp.m_size = size_1 + size_2;
+		temp.m_head = begin_1.m_element;
+		temp.end().m_element = nullptr;
+		temp.clear();
+
+		begin_1.m_element = new_lst.m_head;
+
+		if (new_head) 
+		{
+			m_head = begin_1.m_element;
+		}
 
 	}
-
+	*/
 
 public:
 
@@ -202,13 +221,13 @@ public:
 			return;
 		}
 
-		m_head = new Node(other.m_head->Get_data(), other.m_head->Get_next());
+		m_head = new Node(other.m_head->get_data(), other.m_head->get_next());
 		Node* temp = m_head;
 
 		for (size_t i = 0; i < m_size - 1; ++i)
 		{
-			temp->Set_next(new Node(temp->Get_next()->Get_data(), temp->Get_next()->Get_next()));
-			temp = temp->Get_next();
+			temp->set_next(new Node(temp->get_next()->get_data(), temp->get_next()->get_next()));
+			temp = temp->get_next();
 		}
 	}
 
@@ -219,17 +238,17 @@ public:
 			return *this;
 		}
 
-		Clear();
+		clear();
 
 		m_size = other.m_size;
 
-		m_head = new Node(other.m_head->Get_data(), other.m_head->Get_next());
+		m_head = new Node(other.m_head->get_data(), other.m_head->get_next());
 		Node* temp = m_head;
 
 		for (size_t i = 0; i < m_size - 1; ++i)
 		{
-			temp->Set_next(new Node(temp->Get_next()->Get_data(), temp->Get_next()->Get_next()));
-			temp = temp->Get_next();
+			temp->set_next(new Node(temp->get_next()->get_data(), temp->get_next()->get_next()));
+			temp = temp->get_next();
 		}
 
 		return *this;
@@ -243,7 +262,7 @@ public:
 
 	Forward_list<T>& operator=(Forward_list<T>&& other)
 	{
-		Clear();
+		clear();
 
 		m_size = other.m_size;
 
@@ -258,65 +277,65 @@ public:
 	{
 		for (size_t i = 0; i < m_size; ++i)
 		{
-			Pop_front();
+			pop_front();
 		}
 	}
 
 
 
-	void Push_front(const T& value)
+	void push_front(const T& value)
 	{
 		m_head = new Node(value, m_head);
 		++m_size;
 	}
 
-	void Push_back(const T& value)
+	void push_back(const T& value)
 	{
 		if(m_size < 1)
 		{
-			Push_front(value);
+			push_front(value);
 			return;
 		}
 
 		List_iterator<T> current = begin();
 		for (size_t i = 0; i < m_size - 1; ++i, ++current);
 
-		current.m_element->Set_next(new Node(value, nullptr));
+		current.m_element->set_next(new Node(value, nullptr));
 		++m_size;
 	}
 
-	void Insert_after(List_iterator<T>& location, const T& value)
+	void insert_after(List_iterator<T>& location, const T& value)
 	{
-		location.m_element->Set_next(new Node(value, location.m_element->Get_next()));
+		location.m_element->set_next(new Node(value, location.m_element->get_next()));
 		++m_size;
 	}
 
-	void Move_by(List_iterator<T>& location, size_t n)
+	void move_by(List_iterator<T>& location, size_t n)
 	{
 		Node* temp = location.m_element;
 		List_iterator<T> current = begin();
 
 		if (current != location)
 		{
-			while (current.m_element->Get_next() != temp)
+			while (current.m_element->get_next() != temp)
 			{
 				++current;
 			}
 		}
 		else
 		{
-			m_head = temp->Get_next();
+			m_head = temp->get_next();
 		}
 
-		current.m_element->Set_next(location.m_element->Get_next());
+		current.m_element->set_next(location.m_element->get_next());
 
 		for (size_t i = 0; i < n; ++i, ++current);
 
-		temp->Set_next(current.m_element->Get_next());
-		current.m_element->Set_next(temp);
+		temp->set_next(current.m_element->get_next());
+		current.m_element->set_next(temp);
 	}
 
-	void Erase(List_iterator<T>& location)
+	void erase(List_iterator<T>& location)
 	{
 
 		Node* temp = location.m_element;
@@ -324,23 +343,23 @@ public:
 
 		if(current == location)
 		{
-			Pop_front();
+			pop_front();
 			return;
 		}
 
-		while (current.m_element->Get_next() != temp)
+		while (current.m_element->get_next() != temp)
 		{
 			++current;
 		}
 
-		current.m_element->Set_next(temp->Get_next());
+		current.m_element->set_next(temp->get_next());
 
 		--m_size;
 
 		delete temp;
 	}
 
-	void Erase_every(size_t n)
+	void erase_every(size_t n)
 	{
 		if(n == 0)
 		{
@@ -349,7 +368,7 @@ public:
 
 		if (n == 1)
 		{
-			Clear();
+			clear();
 			return;
 		}
 
@@ -361,35 +380,92 @@ public:
 
 			List_iterator<T> temp = current++;
 
-			Erase(temp);
+			erase(temp);
 		}
 	}
 
-	void Pop_front()
+	void pop_front()
 	{
 		Node* temp = m_head;
 
-		m_head = m_head->Get_next();
+		m_head = m_head->get_next();
 
 		--m_size;
 
 		delete temp;
 	}
 
-	void Clear() 
+	void clear() 
 	{
 		while(m_size > 0)
 		{
-			Pop_front();
+			pop_front();
 		}
 	}
 
-	void Sort()
+	void sort()
 	{
-		Merge_sort(*this, begin(), end());
+		if(m_size == 0)
+		{
+			return;
+		}
+
+		Forward_list new_list;
+
+		while(m_size > 0)
+		{
+			List_iterator<T> max = begin();
+
+			List_iterator<T> list_end = end();
+
+			for(List_iterator<T> it = begin(); it != list_end; ++it)
+			{
+				if(*it > *max)
+				{
+					max = it;
+				}
+			}
+
+			new_list.push_front(*max);
+
+			erase(max);
+		}
+
+		*this = std::move(new_list);
 	}
 
-	size_t Size()
+	void reverse_sort()
+	{
+		if (m_size == 0)
+		{
+			return;
+		}
+
+		Forward_list new_list;
+
+		while (m_size > 0)
+		{
+			List_iterator<T> min = begin();
+
+			List_iterator<T> list_end = end();
+
+			for (List_iterator<T> it = begin(); it != list_end; ++it)
+			{
+				if (*it < *min)
+				{
+					min = it;
+				}
+			}
+
+			new_list.push_front(*min);
+
+			erase(min);
+		}
+
+		*this = std::move(new_list);
+	}
+
+	size_t size()
 	{
 		return m_size;
 	}
@@ -414,18 +490,18 @@ public:
 
 
 template <typename T>
-Forward_list<T> Conjoin(Forward_list<T>& l1, Forward_list<T>& l2)
+Forward_list<T> conjoin(Forward_list<T>& l1, Forward_list<T>& l2)
 {
 
 	Forward_list<T> conjoined;
 
 	for(T& i : l1)
 	{
-		conjoined.Push_back(i);
+		conjoined.push_back(i);
 	}
 	for(T& i : l2)
 	{
-		conjoined.Push_back(i);
+		conjoined.push_back(i);
 	}
 
 	return conjoined;
@@ -484,32 +560,34 @@ public:
 	List_iterator<T>& operator=(const List_iterator<T>& other)
 	{
 		m_element = other.m_element;
+
+		return *this;
 	}
 
 
 
 	T& operator*()
 	{
-		return m_element->Get_data();
+		return m_element->get_data();
 	}
 
 	T& operator->()
 	{
-		return m_element->Get_data();
+		return m_element->get_data();
 	}
 	
 
 
 	List_iterator<T>& operator++()
 	{
-		m_element = m_element->Get_next();
+		m_element = m_element->get_next();
 		return *this;
 	}
 
 	List_iterator<T> operator++(int)
 	{
 		List_iterator<T> temp(*this);
-		m_element = m_element->Get_next();
+		m_element = m_element->get_next();
 		return temp;
 	}
 
