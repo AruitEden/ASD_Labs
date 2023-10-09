@@ -103,6 +103,92 @@ protected:
 
 	Node* m_head;
 
+	
+
+	void Merge_sort(Forward_list<T>& lst, List_iterator<T> begin, List_iterator<T> end, size_t size)
+	{
+		if(size > 1)
+		{
+			List_iterator<T> mid = begin;
+			for (size_t i = 0; i < size / 2; ++i, ++mid);
+			Merge_sort(lst, begin, mid++, size);
+			Merge_sort(lst, mid, end, size);
+			Merge(lst, begin, mid, end);
+		}
+	}
+
+	void Merge(Forward_list<T>& lst, List_iterator<T> begin, List_iterator<T> mid, List_iterator<T> end)
+	{
+
+		Forward_list<T>  new_lst;
+		List_iterator<T> first_begin = begin;
+		List_iterator<T> first_end = mid;
+		List_iterator<T> second_begin = ++mid;
+		List_iterator<T> second_end = end;
+
+		bool active = true, write_first = true, write_second = true;
+		while(active)
+		{
+			if(first_begin == first_end)
+			{
+				write_first = false;
+				active = false;
+			}
+			if(second_begin == second_end)
+			{
+				write_second = false;
+				active = false;
+			}
+			if((*first_begin) > (*second_begin))
+			{
+				new_lst.Push_front(*first_begin);
+				++first_begin;
+			}
+			else
+			{
+				new_lst.Push_front(*second_begin);
+				++second_begin;
+			}
+		}
+
+		active = true;
+		if(write_first) 
+		{
+			while(active) 
+			{
+				new_lst.Push_front(*first_begin);
+				++first_begin;
+
+				if (first_begin == first_end)
+				{
+					new_lst.Push_front(*first_begin);
+					write_first = false;
+					active = false;
+				}
+			}
+		}
+
+		active = true;
+		if (write_second)
+		{
+			while (active)
+			{
+				new_lst.Push_front(*second_begin);
+				++second_begin;
+
+				if (second_begin == second_end)
+				{
+					new_lst.Push_front(*second_begin);
+					write_first = false;
+					active = false;
+				}
+			}
+		}
+
+		lst = std::move(new_lst);
+
+	}
+
 
 public:
 
@@ -126,10 +212,46 @@ public:
 		}
 	}
 
+	Forward_list<T>& operator=(Forward_list<T>& other)
+	{
+		if(m_head == other.m_head)
+		{
+			return *this;
+		}
+
+		Clear();
+
+		m_size = other.m_size;
+
+		m_head = new Node(other.m_head->Get_data(), other.m_head->Get_next());
+		Node* temp = m_head;
+
+		for (size_t i = 0; i < m_size - 1; ++i)
+		{
+			temp->Set_next(new Node(temp->Get_next()->Get_data(), temp->Get_next()->Get_next()));
+			temp = temp->Get_next();
+		}
+
+		return *this;
+	}
+
 	Forward_list<T>(Forward_list<T>&& other)
 		: m_size(other.m_size), m_head(other.m_head)
 	{
 		other.m_size = 0;
+	}
+
+	Forward_list<T>& operator=(Forward_list<T>&& other)
+	{
+		Clear();
+
+		m_size = other.m_size;
+
+		m_head = other.m_head;
+
+		other.m_size = 0;
+
+		return *this;
 	}
 
 	~Forward_list<T>() 
@@ -260,6 +382,11 @@ public:
 		{
 			Pop_front();
 		}
+	}
+
+	void Sort()
+	{
+		Merge_sort(*this, begin(), end());
 	}
 
 	size_t Size()
