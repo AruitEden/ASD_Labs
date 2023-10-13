@@ -3,18 +3,6 @@
 
 
 
-template <typename T>
-struct Looped_forward_list_traits
-{
-
-	using collection_base_type = typename Forward_list_traits<T>::collection_base_type;
-
-	using element_type = typename Forward_list_traits<T>::element_type;
-
-	using iterator_type = typename Forward_list_traits<T>::iterator_type;
-
-};
-
 
 
 template <class T>
