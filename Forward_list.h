@@ -15,7 +15,7 @@ template <typename T>
 struct Forward_list_traits
 {
 
-	using collection_type = typename Forward_list<T>;
+	using collection_base_type = typename Forward_list<T>;
 
 	using element_type = typename Forward_list<T>::Node;
 
@@ -189,7 +189,7 @@ protected:
 
 	template<class T> friend class Forward_list;
 
-	template<class T> friend class Circular_forward_list;
+	template<class T> friend class Looped_forward_list;
 
 
 

@@ -1,7 +1,7 @@
 ﻿#include <iostream>
 #include <string>
 #include "Forward_list.h"
-#include "Circular_forward_list.h"
+#include "Looped_forward_list.h"
 
 
 
@@ -80,7 +80,7 @@ void Print_list(Forward_list<T>& list)
     }
 }
 
-void Print_people(Circular_forward_list<std::string>& list)
+void Print_people(Looped_forward_list<std::string>& list)
 {
     Forward_list_iterator<std::string> it = list.begin();
     for (size_t i = 0; i < list.size(); ++i, ++it)
@@ -89,8 +89,8 @@ void Print_people(Circular_forward_list<std::string>& list)
     }
 }
 
-void Shuffle(Circular_forward_list<std::string>& people1, Circular_forward_list<std::string>& people2,
-    Circular_forward_list<std::string>& team1, Circular_forward_list<std::string>& team2, size_t m, size_t n);
+void Shuffle(Looped_forward_list<std::string>& people1, Looped_forward_list<std::string>& people2,
+    Looped_forward_list<std::string>& team1, Looped_forward_list<std::string>& team2, size_t m, size_t n);
 
 
 
@@ -411,7 +411,7 @@ void First_task()
 void Second_task()
 {
 
-    Circular_forward_list<std::string> people1, people2, team1, team2;
+    Looped_forward_list<std::string> people1, people2, team1, team2;
 
     size_t n, m;
 
@@ -509,8 +509,8 @@ void Second_task()
 
 
 
-void Shuffle(Circular_forward_list<std::string>& people1, Circular_forward_list<std::string>& people2,
-    Circular_forward_list<std::string>& team1, Circular_forward_list<std::string>& team2, size_t m, size_t n)
+void Shuffle(Looped_forward_list<std::string>& people1, Looped_forward_list<std::string>& people2,
+    Looped_forward_list<std::string>& team1, Looped_forward_list<std::string>& team2, size_t m, size_t n)
 {
 
     Forward_list_iterator<std::string> it1 = people1.begin(), it2 = people2.begin();
