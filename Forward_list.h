@@ -11,18 +11,6 @@ class Forward_list;
 
 
 
-template <typename T>
-struct Forward_list_traits
-{
-
-	using collection_base_type = typename Forward_list<T>;
-
-	using element_type = typename Forward_list<T>::Node;
-
-	using iterator_type = typename Iterator<T, Forward_list<T>>;
-
-};
-
 
 
 template <typename T>
@@ -39,8 +27,6 @@ class Forward_list
 private:
 
 	template<class T, class S> friend class Iterator;
-
-	template<typename T> friend struct Forward_list_traits;
 	
 
 protected:
@@ -183,7 +169,7 @@ class Iterator<T, Forward_list<T>>
 
 protected:
 
-	using Node_t = typename Forward_list_traits<T>::element_type;
+	using Node_t = typename Forward_list<T>::Node;
 
 	Node_t* m_element;
 
