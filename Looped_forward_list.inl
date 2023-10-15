@@ -2,7 +2,7 @@
 
 
 template<class T>
-inline void Looped_forward_list<T>::push_front(const T& value)
+void Looped_forward_list<T>::push_front(const T& value)
 {
 	if (Forward_list<T>::m_size == 0)
 	{
@@ -24,7 +24,7 @@ inline void Looped_forward_list<T>::push_front(const T& value)
 }
 
 template<class T>
-inline void Looped_forward_list<T>::clear()
+void Looped_forward_list<T>::clear()
 {
 	if (Forward_list<T>::m_size > 0) {
 
@@ -36,7 +36,7 @@ inline void Looped_forward_list<T>::clear()
 }
 
 template<class T>
-inline void Looped_forward_list<T>::pop_front()
+void Looped_forward_list<T>::pop_front()
 {
 	if (Forward_list<T>::m_size == 1)
 	{
@@ -62,7 +62,7 @@ inline void Looped_forward_list<T>::pop_front()
 }
 
 template<class T>
-inline void Looped_forward_list<T>::erase(Looped_forward_list_iterator<T> location)
+void Looped_forward_list<T>::erase(Looped_forward_list_iterator<T> location)
 {
 	Forward_list<T>::erase(location);
 

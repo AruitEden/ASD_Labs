@@ -3,7 +3,7 @@
 
 
 template<class T>
-inline Forward_list<T>::Forward_list(Forward_list<T>& other) : m_size(other.m_size)
+Forward_list<T>::Forward_list(Forward_list<T>& other) : m_size(other.m_size)
 {
 	if (m_size == 0)
 	{
@@ -22,7 +22,7 @@ inline Forward_list<T>::Forward_list(Forward_list<T>& other) : m_size(other.m_si
 }
 
 template<class T>
-inline Forward_list<T>& Forward_list<T>::operator=(Forward_list<T>& other)
+Forward_list<T>& Forward_list<T>::operator=(Forward_list<T>& other)
 {
 	if (m_head == other.m_head)
 	{
@@ -46,14 +46,14 @@ inline Forward_list<T>& Forward_list<T>::operator=(Forward_list<T>& other)
 }
 
 template<class T>
-inline Forward_list<T>::Forward_list(Forward_list<T>&& other)
+Forward_list<T>::Forward_list(Forward_list<T>&& other)
 	: m_size(other.m_size), m_head(other.m_head)
 {
 	other.m_size = 0;
 }
 
 template<class T>
-inline Forward_list<T>& Forward_list<T>::operator=(Forward_list<T>&& other)
+Forward_list<T>& Forward_list<T>::operator=(Forward_list<T>&& other)
 {
 	clear();
 
@@ -67,14 +67,14 @@ inline Forward_list<T>& Forward_list<T>::operator=(Forward_list<T>&& other)
 }
 
 template<class T>
-inline void Forward_list<T>::push_front(const T& value)
+void Forward_list<T>::push_front(const T& value)
 {
 	m_head = new Node(value, m_head);
 	++m_size;
 }
 
 template<class T>
-inline void Forward_list<T>::push_back(const T& value)
+void Forward_list<T>::push_back(const T& value)
 {
 	if (m_size < 1)
 	{
@@ -90,14 +90,14 @@ inline void Forward_list<T>::push_back(const T& value)
 }
 
 template<class T>
-inline void Forward_list<T>::insert_after(Forward_list_iterator<T> location, const T& value)
+void Forward_list<T>::insert_after(Forward_list_iterator<T> location, const T& value)
 {
 	location.m_element->set_next(new Node(value, location.m_element->get_next()));
 	++m_size;
 }
 
 template<class T>
-inline void Forward_list<T>::move_by(Forward_list_iterator<T> location, size_t n)
+void Forward_list<T>::move_by(Forward_list_iterator<T> location, size_t n)
 {
 	Node* temp = location.m_element;
 	Forward_list_iterator<T> current = begin();
@@ -123,7 +123,7 @@ inline void Forward_list<T>::move_by(Forward_list_iterator<T> location, size_t n
 }
 
 template<class T>
-inline void Forward_list<T>::erase(Forward_list_iterator<T> location)
+void Forward_list<T>::erase(Forward_list_iterator<T> location)
 {
 
 	Node* temp = location.m_element;
@@ -148,7 +148,7 @@ inline void Forward_list<T>::erase(Forward_list_iterator<T> location)
 }
 
 template<class T>
-inline void Forward_list<T>::erase_every(size_t n)
+void Forward_list<T>::erase_every(size_t n)
 {
 	if (n == 0)
 	{
@@ -174,7 +174,7 @@ inline void Forward_list<T>::erase_every(size_t n)
 }
 
 template<class T>
-inline void Forward_list<T>::pop_front()
+void Forward_list<T>::pop_front()
 {
 	Node* temp = m_head;
 
@@ -186,7 +186,7 @@ inline void Forward_list<T>::pop_front()
 }
 
 template<class T>
-inline void Forward_list<T>::clear()
+void Forward_list<T>::clear()
 {
 	while (m_size > 0)
 	{
@@ -195,7 +195,7 @@ inline void Forward_list<T>::clear()
 }
 
 template<class T>
-inline void Forward_list<T>::sort()
+void Forward_list<T>::sort()
 {
 	if (m_size == 0)
 	{
@@ -227,7 +227,7 @@ inline void Forward_list<T>::sort()
 }
 
 template<class T>
-inline void Forward_list<T>::reverse_sort()
+void Forward_list<T>::reverse_sort()
 {
 	if (m_size == 0)
 	{
@@ -259,7 +259,7 @@ inline void Forward_list<T>::reverse_sort()
 }
 
 template<typename T>
-inline Forward_list<T> conjoin(Forward_list<T>& l1, Forward_list<T>& l2)
+Forward_list<T> conjoin(Forward_list<T>& l1, Forward_list<T>& l2)
 {
 
 	Forward_list<T> conjoined;
@@ -278,7 +278,7 @@ inline Forward_list<T> conjoin(Forward_list<T>& l1, Forward_list<T>& l2)
 }
 
 template<typename T>
-inline Forward_list<T> intersect(Forward_list<T>& l1, Forward_list<T>& l2)
+Forward_list<T> intersect(Forward_list<T>& l1, Forward_list<T>& l2)
 {
 
 	Forward_list<T> new_list;
