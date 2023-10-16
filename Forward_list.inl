@@ -104,6 +104,11 @@ void Forward_list<T>::insert_after(Forward_list_iterator<T> location, const T& v
 template<class T>
 void Forward_list<T>::move_by(Forward_list_iterator<T> location, size_t n)
 {
+	if (n == 0)
+	{
+		return;
+	}
+
 	Node* temp = location.m_element;
 	Forward_list_iterator<T> current = begin();
 
