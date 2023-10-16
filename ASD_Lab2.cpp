@@ -453,9 +453,9 @@ void Second_task()
 
             
         case Task_2::ADD_PEOPLE:
-            std::cout << "Enter first name: ";
+            std::cout << "Enter first participant name: ";
             std::cin >> name1;
-            std::cout << "Enter second name: ";
+            std::cout << "Enter second participant name: ";
             std::cin >> name2;
 
             people1.push_front(name1);
@@ -515,9 +515,9 @@ void Shuffle(Looped_forward_list<std::string>& people1, Looped_forward_list<std:
 
     Forward_list_iterator<std::string> it1 = people1.begin(), it2 = people2.begin();
 
-    for (int i = 1; i < n; ++i, ++it1);
+    for (int i = 0; i < n - 1; ++i, ++it1);
 
-    for (int i = 1; i < m; ++i, ++it2);
+    for (int i = 0; i < m - 1; ++i, ++it2);
 
     bool t = 1;
 
@@ -547,11 +547,11 @@ void Shuffle(Looped_forward_list<std::string>& people1, Looped_forward_list<std:
             break;
         }
 
-        for (; i1 < n && i2 < m; ++i1, ++i2, ++it1, ++it2);
+        for (; i1 < n - 1 && i2 < m - 1; ++i1, ++i2, ++it1, ++it2);
 
-        for (; i1 < n; ++i1, ++it1);
+        for (; i1 < n - 1; ++i1, ++it1);
 
-        for (; i2 < m; ++i2, ++it2);
+        for (; i2 < m - 1; ++i2, ++it2);
 
     }
 

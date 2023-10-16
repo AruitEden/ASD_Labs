@@ -55,6 +55,11 @@ Forward_list<T>::Forward_list(Forward_list<T>&& other)
 template<class T>
 Forward_list<T>& Forward_list<T>::operator=(Forward_list<T>&& other)
 {
+	if (m_head == other.m_head)
+	{
+		return *this;
+	}
+
 	clear();
 
 	m_size = other.m_size;
@@ -281,15 +286,16 @@ template<typename T>
 Forward_list<T> intersect(Forward_list<T>& l1, Forward_list<T>& l2)
 {
 
-	Forward_list<T> new_list;
+	Forward_list<T> new_list, l2_copy(l2);
 
 	for (auto i : l1)
 	{
-		for (auto j : l2)
+		for (Forward_list_iterator<T> j = l2_copy.begin(), last = l2_copy.end(); j != last; ++j)
 		{
-			if (i == j)
+			if (i == *j)
 			{
 				new_list.push_back(i);
+				l2_copy.erase(j);
 				break;
 			}
 		}

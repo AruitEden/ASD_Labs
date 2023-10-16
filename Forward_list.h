@@ -94,18 +94,26 @@ public:
 
 	Forward_list<T>() : m_size(0), m_head(nullptr) {}
 
+
+
 	Forward_list<T>(Forward_list<T>& other);
 
 	Forward_list<T>& operator=(Forward_list<T>& other);
+
+
 
 	Forward_list<T>(Forward_list<T>&& other);
 
 	Forward_list<T>& operator=(Forward_list<T>&& other);
 
+
+
 	virtual ~Forward_list<T>() 
 	{
 		clear();
 	}
+
+
 
 
 
@@ -115,7 +123,11 @@ public:
 
 	virtual void insert_after(Forward_list_iterator<T> location, const T& value);
 
+
+
 	virtual void move_by(Forward_list_iterator<T> location, size_t n);
+
+
 
 	virtual void erase(Forward_list_iterator<T> location);
 
@@ -125,9 +137,13 @@ public:
 
 	virtual void clear();
 
+
+
 	virtual void sort();
 
 	virtual void reverse_sort();
+
+
 
 	virtual size_t size()
 	{
