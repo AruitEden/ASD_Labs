@@ -3,21 +3,16 @@
 #include "Forward_list.h"
 
 
+
 template <typename T, typename Container>
 struct Stack_traits
-{
-
-	using iterator_type = typename Iterator<T, Container>;
-
-};
-
-
+{};
 
 template <typename T>
-struct Stack_traits<T, Forward_list<T>>
+struct Stack_traits<T, Forward_list<T>> 
 {
 
-	using iterator_type = typename Forward_list_iterator<T>;
+	using iterator_type = Forward_list_iterator<T>;
 
 };
 
@@ -36,6 +31,8 @@ using Stack_iterator = typename Stack_traits<T, Container>::iterator_type;
 
 
 
+
+
 template <class T, class Container>
 class Stack
 {
@@ -47,7 +44,44 @@ protected:
 
 public:
 
-	Stack<T, Container>() : m_container(Container()) {}
-
 
 };
+
+
+
+template <class T>
+class Stack<T, Forward_list<T>>
+{
+
+protected:
+
+	Forward_list<T> m_container;
+
+
+public:
+
+	Stack<T, Forward_list<T>>() : m_container(Forward_list<T>()) {}
+	
+
+
+	void push(const T& value);
+
+	void pop();
+
+	void exchange();
+
+	void reverse();
+
+
+
+	size_t size();
+
+	Stack_iterator<T> begin();
+
+	Stack_iterator<T> end();
+
+};
+
+
+
+#include "Stack.inl"

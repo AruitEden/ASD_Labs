@@ -29,8 +29,25 @@ int main()
 
     Stack<int> st;
 
+    st.push(5);
+    st.push(1);
+    //st.push(-2);
+    //st.push(4);
     
+    std::cout << "----- STACK -----\n";
+    for(auto i : st)
+    {
+        std::cout << i << '\n';
+    }
+    std::cout << "\n\n";
     
+    std::cout << "----- Exchange -----\n";
+    st.exchange();
+    for (auto i : st)
+    {
+        std::cout << i << '\n';
+    }
+    std::cout << "\n\n";
 
     return 0;
 
