@@ -16,11 +16,6 @@ template <class T>
 class Looped_forward_list : protected Forward_list<T>
 {
 
-private:
-
-	template<typename T> friend class Looped_forward_list;
-
-
 protected:
 
 	using Node = typename Forward_list<T>::Node;
@@ -42,11 +37,14 @@ public:
 	virtual void push_front(const T& value) override;
 
 
+
 	virtual void clear() override;
 
 	virtual void pop_front() override;
 
 	virtual void erase(Looped_forward_list_iterator<T> location) override;
+
+
 
 	virtual Looped_forward_list_iterator<T> begin() override
 	{
