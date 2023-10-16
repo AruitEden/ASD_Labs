@@ -48,11 +48,28 @@ void Stack<T>::clear()
 {
 	while (size != 0)
 	{
-		pop_front();
+		pop();
 	}
 }
 
 
+
+
+
+template<typename T>
+inline void Stack<T>::swap()
+{
+	Node<T>* temp = head;
+
+	while (temp->pNext != nullptr)
+	{
+		temp = temp->pNext;
+	}
+
+	T dat = temp->data;
+	temp->data = head->data;
+	head->data = dat;
+}
 
 
 template<typename T>

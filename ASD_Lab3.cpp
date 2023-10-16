@@ -10,4 +10,9 @@ int main()
     A.push(8);
 
     A.Print_list();
+
+    std::cout << std::endl << std::endl;
+
+    A.swap();
+    A.Print_list();
 }
