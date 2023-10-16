@@ -31,8 +31,8 @@ int main()
 
     st.push(5);
     st.push(1);
-    //st.push(-2);
-    //st.push(4);
+    st.push(-2);
+    st.push(4);
     
     std::cout << "----- STACK -----\n";
     for(auto i : st)
@@ -41,8 +41,9 @@ int main()
     }
     std::cout << "\n\n";
     
-    std::cout << "----- Exchange -----\n";
-    st.exchange();
+    std::cout << "----- Clear -----\n";
+    //std::cout << std::boolalpha << st.contains(15) << '\n';
+    st.clear();
     for (auto i : st)
     {
         std::cout << i << '\n';

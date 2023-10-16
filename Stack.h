@@ -68,9 +68,15 @@ public:
 
 	void pop();
 
+
+
 	void exchange();
 
 	void reverse();
+
+	bool contains(const T& value);
+
+	void clear();
 
 
 

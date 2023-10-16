@@ -5,17 +5,13 @@
 template<class T>
 void Stack<T, Forward_list<T>>::push(const T& value)
 {
-
 	m_container.push_front(value);
-
 }
 
 template<class T>
 void Stack<T, Forward_list<T>>::pop()
 {
-
 	m_container.pop_front();
-
 }
 
 
@@ -54,18 +50,55 @@ size_t Stack<T, Forward_list<T>>::size()
 
 
 template<class T>
+void Stack<T, Forward_list<T>>::reverse()
+{
+	Stack<T> reversed_stack;
+
+	for(auto i : *this)
+	{
+		reversed_stack.push(i);
+	}
+
+	(*this) = std::move(reversed_stack);
+}
+
+
+
+template<class T>
+bool Stack<T, Forward_list<T>>::contains(const T& value)
+{
+	for(auto i : *this)
+	{
+		if(i == value)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+
+
+template<class T>
+void Stack<T, Forward_list<T>>::clear()
+{
+	m_container.clear();
+}
+
+
+
+template<class T>
 inline Stack_iterator<T> Stack<T, Forward_list<T>>::begin()
 {
-
 	return m_container.begin();
-
 }
 
 template<class T>
 inline Stack_iterator<T> Stack<T, Forward_list<T>>::end()
 {
-
 	return m_container.end();
-
 }
+
+
 
