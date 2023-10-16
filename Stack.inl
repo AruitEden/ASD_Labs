@@ -57,8 +57,39 @@ void Stack<T>::clear()
 
 
 template<typename T>
+inline void Stack<T>::revers()
+{
+	if (size == 0 || size == 1) return;
+
+	if (size == 2)
+	{
+		swap();
+	}
+
+	else
+	{
+		Node<T>* prhead = nullptr;
+		Node<T>* p;
+
+		while (head != nullptr)
+		{
+			p = head->pNext;
+			head->pNext = prhead;
+			prhead = head;
+			head = p;
+		}
+
+		head = prhead;
+	}
+}
+
+
+template<typename T>
 inline void Stack<T>::swap()
 {
+	if (size == 0 || size == 1) return;
+
+
 	Node<T>* temp = head;
 
 	while (temp->pNext != nullptr)

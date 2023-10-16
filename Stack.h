@@ -47,6 +47,8 @@ public:
 
 
 	
+	void revers();
+
 	void swap();
 
 	void Print_list();
