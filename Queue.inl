@@ -20,7 +20,7 @@ inline Queue<T>::~Queue()
 
 
 template<typename T>
-inline void Queue<T>::push_back(T data)
+inline void Queue<T>::push(T data)
 {
 	Node<T> *node = new Node<T>(data);
 
@@ -40,7 +40,7 @@ inline void Queue<T>::push_back(T data)
 
 
 template<typename T>
-inline void Queue<T>::pop_front()
+inline void Queue<T>::pop()
 {
 	if (size == 0) return;
 
@@ -57,7 +57,7 @@ inline void Queue<T>::clear()
 {
 	while (size!=0)
 	{
-		pop_front();
+		pop();
 	}
 }
 

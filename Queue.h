@@ -32,12 +32,12 @@ public:
 	int getSize() { return size; }
 
 
-	void push_back(T data);
+	void push(T data);
 
 
 
 
-	void pop_front();
+	void pop();
 
 	void clear();
 

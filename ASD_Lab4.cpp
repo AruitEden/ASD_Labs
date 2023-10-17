@@ -1,56 +1,34 @@
 ﻿#include <iostream>
+#include"Interface.h"
 #include"Queue.h"
 
 int main()
 {
+    setlocale(LC_ALL, "ru");
+
     Queue<int>A;
 
-    A.push_back(3);
-    A.push_back(7);
-    A.push_back(10);
+    A.push(3);
+    A.push(7);
+    A.push(10);
+    A.push(18);
+    A.push(19);
 
-    A.Print_Queue();
-    std::cout << std::endl << std::endl;
+    char action;
+    PrintHelp();
 
-    A.pop_front();
-    A.pop_front();
+    while (true)
+    {
+        std::cout << "\n\nВведите операцию: ";
+        std::cin >> action;
+        std::cout << std::endl;
 
-    A.Print_Queue();
-    std::cout << std::endl << std::endl;
+        if (action == 'E')
+        {
+            std::cout << "Хорошего дня\n";
+            return 0;
+        }
 
-    A.push_back(4);
-    A.push_back(90);
-    A.push_back(18);
-
-    A.Print_Queue();
-    std::cout << std::endl << std::endl;
-
-    std::cout << "Queue\n";
-    A.swap();
-    A.Print_Queue();
-
-    std::cout << std::endl << std::endl;
-
-    A.revers();
-    A.Print_Queue();
-    std::cout << std::endl << std::endl;
-
-    A.push_back(36);
-
-    A.swap();
-    A.Print_Queue();
-
-    int a;
-    std::cout << "Input: ";
-    std::cin >> a;
-
-    std::cout << A.search(a);
-
-
-    std::cout << std::endl << std::endl;
-
-    std::cout << "Input: ";
-    std::cin >> a;
-
-    std::cout << A.search(a);
+        interface(action, A);
+    }
 }
