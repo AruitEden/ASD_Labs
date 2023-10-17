@@ -17,4 +17,19 @@ int main()
 
     A.revers();
     A.Print_list();
+
+    std::cout << std::endl << std::endl;
+
+    int a;
+
+    std::cout << "Inpot data: ";
+    std::cin >> a;
+    std::cout << "Result: " << A.search(a);
+
+    std::cout << std::endl << std::endl;
+
+    std::cout << "Inpot data: ";
+    std::cin >> a;
+    std::cout << "Result: " << A.search(a);
+    
 }

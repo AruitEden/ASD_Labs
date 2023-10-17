@@ -57,6 +57,20 @@ void Stack<T>::clear()
 
 
 template<typename T>
+inline bool Stack<T>::search(const T& dat)
+{
+	for (Node<T>* i = head; i != nullptr; i = i->pNext)
+	{
+		if (i->data == dat)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+template<typename T>
 inline void Stack<T>::revers()
 {
 	if (size == 0 || size == 1) return;

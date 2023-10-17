@@ -47,6 +47,8 @@ public:
 
 
 	
+	bool search(const T& dat);
+
 	void revers();
 
 	void swap();
