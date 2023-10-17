@@ -26,6 +26,6 @@ int main()
     std::cout << std::endl << std::endl;
 
     std::cout << "Queue\n";
-    A.clear();
+    A.swap();
     A.Print_Queue();
 }

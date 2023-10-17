@@ -42,6 +42,7 @@ public:
 	void clear();
 
 
+	void swap();
 
 	void Print_Queue();
 };

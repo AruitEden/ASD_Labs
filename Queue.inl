@@ -65,6 +65,17 @@ inline void Queue<T>::clear()
 
 
 template<typename T>
+inline void Queue<T>::swap()
+{
+	if (size == 0 || size == 1) return;
+
+	T dat = tail->data;
+	tail->data = head->data;
+	head->data = dat;
+}
+
+
+template<typename T>
 inline void Queue<T>::Print_Queue()
 {
 	for (Node<T>* i = this->head; i != nullptr; i = i->pNext)
