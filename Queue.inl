@@ -64,6 +64,35 @@ inline void Queue<T>::clear()
 
 
 
+
+template<typename T>
+inline void Queue<T>::revers()
+{
+	if (size == 0 || size == 1) return;
+
+	if (size == 2 || size == 3)
+	{
+		swap();
+	}
+	else
+	{
+		tail = head;
+
+		Node<T>* prhead = nullptr;
+		Node<T>* p;
+
+		while (head != nullptr)
+		{
+			p = head->pNext;
+			head->pNext = prhead;
+			prhead = head;
+			head = p;
+		}
+
+		head = prhead;
+	}
+}
+
 template<typename T>
 inline bool Queue<T>::search(const T& dat)
 {

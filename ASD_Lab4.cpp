@@ -31,6 +31,15 @@ int main()
 
     std::cout << std::endl << std::endl;
 
+    A.revers();
+    A.Print_Queue();
+    std::cout << std::endl << std::endl;
+
+    A.push_back(36);
+
+    A.swap();
+    A.Print_Queue();
+
     int a;
     std::cout << "Input: ";
     std::cin >> a;
