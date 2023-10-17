@@ -28,4 +28,20 @@ int main()
     std::cout << "Queue\n";
     A.swap();
     A.Print_Queue();
+
+    std::cout << std::endl << std::endl;
+
+    int a;
+    std::cout << "Input: ";
+    std::cin >> a;
+
+    std::cout << A.search(a);
+
+
+    std::cout << std::endl << std::endl;
+
+    std::cout << "Input: ";
+    std::cin >> a;
+
+    std::cout << A.search(a);
 }

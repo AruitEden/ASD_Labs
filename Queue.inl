@@ -65,6 +65,20 @@ inline void Queue<T>::clear()
 
 
 template<typename T>
+inline bool Queue<T>::search(const T& dat)
+{
+	for (Node<T>* i = head; i != nullptr; i = i->pNext)
+	{
+		if (i->data == dat)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+template<typename T>
 inline void Queue<T>::swap()
 {
 	if (size == 0 || size == 1) return;

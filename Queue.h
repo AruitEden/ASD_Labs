@@ -42,6 +42,9 @@ public:
 	void clear();
 
 
+
+	bool search(const T& dat);
+
 	void swap();
 
 	void Print_Queue();
