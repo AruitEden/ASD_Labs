@@ -118,9 +118,9 @@ inline void Stack<T>::swap()
 
 
 template<typename T>
-inline void Stack<T>::Print_list()
+inline void Stack<T>::Print_stack()
 {
-	for (Node<T> *i = head; i != nullptr; i = i->pNext)
+	for (Node<T> *i = this->head; i != nullptr; i = i->pNext)
 	{
 		std::cout << i->data << '\n';
 	}

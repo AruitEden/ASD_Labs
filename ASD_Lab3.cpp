@@ -1,8 +1,11 @@
 ﻿#include <iostream>
 #include"Stack.h"
+#include"Interface.h"
 
 int main()
 {
+    setlocale(LC_ALL, "ru");
+
     Stack<int> A;
 
     A.push(3);
@@ -11,25 +14,23 @@ int main()
     A.push(7);
     A.push(9);
 
-    A.Print_list();
 
-    std::cout << std::endl << std::endl;
+    char action;
+    PrintHelp();
 
-    A.revers();
-    A.Print_list();
+    while (true)
+    {
+        std::cout << "\n\nВведите операцию: ";
+        std::cin >> action;
+        std::cout << std::endl;
 
-    std::cout << std::endl << std::endl;
+        if (action == 'E')
+        {
+            std::cout << "Хорошего дня\n";
+            return 0;
+        }
 
-    int a;
-
-    std::cout << "Inpot data: ";
-    std::cin >> a;
-    std::cout << "Result: " << A.search(a);
-
-    std::cout << std::endl << std::endl;
-
-    std::cout << "Inpot data: ";
-    std::cin >> a;
-    std::cout << "Result: " << A.search(a);
+        interface(action, A);
+    }
     
 }

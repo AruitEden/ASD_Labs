@@ -1,5 +1,5 @@
 #pragma once
-
+#include<iostream>
 
 template <typename T>
 class Stack
@@ -53,7 +53,7 @@ public:
 
 	void swap();
 
-	void Print_list();
+	void Print_stack();
 };
 
 
