@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <string>
 
 
 
@@ -9,14 +10,17 @@ size_t multiplication_hash(size_t key, size_t size, double factor = 0.6180339887
 
 size_t string_hash(const char* key, size_t size);
 
+template <typename K>
+size_t get_hash(K key, size_t size, size_t(*hashing_method)(K, size_t));
+
+
+
 
 
 int main()
 {
     
-    const char* str = "f";
-
-    std::cout << strlen(str) << '\n';
+    
 
 }
 
@@ -44,4 +48,10 @@ size_t string_hash(const char* key, size_t size)
     }
 
     return hash % size;
+}
+
+template<typename K>
+size_t get_hash(K key, size_t size, size_t(*hashing_method)(K, size_t))
+{
+    return hashing_method(key, size);
 }
