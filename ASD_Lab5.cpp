@@ -1,20 +1,47 @@
-﻿// ASD_Lab5.cpp : Этот файл содержит функцию "main". Здесь начинается и заканчивается выполнение программы.
-//
+﻿#include <iostream>
 
-#include <iostream>
+
+
+
+size_t division_hash(size_t key, size_t size);
+
+size_t multiplication_hash(size_t key, size_t size, double factor = 0.61803398875);
+
+size_t string_hash(const char* key, size_t size);
+
+
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    
+    const char* str = "f";
+
+    std::cout << strlen(str) << '\n';
+
 }
 
-// Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
-// Отладка программы: F5 или меню "Отладка" > "Запустить отладку"
 
-// Советы по началу работы 
-//   1. В окне обозревателя решений можно добавлять файлы и управлять ими.
-//   2. В окне Team Explorer можно подключиться к системе управления версиями.
-//   3. В окне "Выходные данные" можно просматривать выходные данные сборки и другие сообщения.
-//   4. В окне "Список ошибок" можно просматривать ошибки.
-//   5. Последовательно выберите пункты меню "Проект" > "Добавить новый элемент", чтобы создать файлы кода, или "Проект" > "Добавить существующий элемент", чтобы добавить в проект существующие файлы кода.
-//   6. Чтобы снова открыть этот проект позже, выберите пункты меню "Файл" > "Открыть" > "Проект" и выберите SLN-файл.
+
+size_t division_hash(size_t key, size_t size)
+{
+    return key % size;
+}
+
+size_t multiplication_hash(size_t key, size_t size, double factor) 
+{
+    return double(size) * (double(key) * factor - int(double(key) * factor));
+}
+
+size_t string_hash(const char* key, size_t size)
+{
+    size_t key_length = strlen(key);
+
+    size_t hash = 0;
+
+    for (size_t i = 0, factor = 5; i < key_length; ++i, factor += 6)
+    {
+        hash += size_t(key[i]) * size_t(pow(factor, i));
+    }
+
+    return hash % size;
+}
