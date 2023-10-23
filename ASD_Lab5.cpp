@@ -1,14 +1,8 @@
 ﻿#include <iostream>
 #include <string>
+#include "Hashing.h"
 
 
-
-
-size_t division_hash(size_t key, size_t size);
-
-size_t multiplication_hash(size_t key, size_t size, double factor = 0.61803398875);
-
-size_t string_hash(const char* key, size_t size);
 
 
 
@@ -21,9 +15,9 @@ enum class Menu_commands
     QUIT_PROGRAM = 'q',
     PRINT_HELP = 'h',
 
-    DIVISION_HASH = 1,
-    MULTIPLICATION_HASH = 2,
-    STRING_HASH = 3
+    DIVISION_HASH = '1',
+    MULTIPLICATION_HASH = '2',
+    STRING_HASH = '3'
 };
 
 void Print_command_info();
@@ -94,6 +88,7 @@ int main()
 
         case Menu_commands::STRING_HASH:
             std::cout << "Enter key value: ";
+            while (std::cin.peek() == '\n') std::cin.ignore();
             std::getline(std::cin, str_key);
             std::cout << "Enter table size: ";
             std::cin >> table_size;
@@ -129,36 +124,10 @@ void Print_command_info()
         << "\'" << (char)Menu_commands::CLEAR_CONSOLE << "\' - clear console\n"
         << "\'" << (char)Menu_commands::QUIT_PROGRAM << "\' - quit program\n"
 
-        << "\'" << (int)Menu_commands::DIVISION_HASH << "\' - division hash\n"
-        << "\'" << (int)Menu_commands::MULTIPLICATION_HASH << "\' - multiplication hash\n"
-        << "\'" << (int)Menu_commands::STRING_HASH << "\' - string hash\n"
+        << "\'" << (char)Menu_commands::DIVISION_HASH << "\' - division hash\n"
+        << "\'" << (char)Menu_commands::MULTIPLICATION_HASH << "\' - multiplication hash\n"
+        << "\'" << (char)Menu_commands::STRING_HASH << "\' - string hash\n"
 
         << "\n\n";
 
-}
-
-
-
-size_t division_hash(size_t key, size_t size)
-{
-    return key % size;
-}
-
-size_t multiplication_hash(size_t key, size_t size, double factor) 
-{
-    return double(size) * (double(key) * factor - int(double(key) * factor));
-}
-
-size_t string_hash(const char* key, size_t size)
-{
-    size_t key_length = strlen(key);
-
-    size_t hash = 0;
-
-    for (size_t i = 0, factor = 5; i < key_length; ++i, factor += 6)
-    {
-        hash += size_t(key[i]) * size_t(pow(factor, i));
-    }
-
-    return hash % size;
 }
