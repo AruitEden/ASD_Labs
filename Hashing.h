@@ -3,26 +3,32 @@
 
 
 
-inline size_t division_hash(size_t key, size_t size)
+size_t table_size = 3;
+
+
+
+inline size_t division_hash(size_t key)
 {
-    return key % size;
+    return key % table_size;
 }
 
-inline size_t multiplication_hash(size_t key, size_t size, double factor = 0.61803398875)
+inline size_t multiplication_hash(size_t key, double factor = 0.61803398875)
 {
-    return double(size) * (double(key) * factor - int(double(key) * factor));
+    return double(table_size) * (double(key) * factor - int(double(key) * factor));
 }
 
-inline size_t string_hash(const char* key, size_t size)
+inline size_t string_hash(const char* key)
 {
     size_t key_length = strlen(key);
 
     size_t hash = 0;
 
-    for (size_t i = 0, factor = 5; i < key_length; ++i, factor += 6)
+    size_t factor = 31;
+
+    for (size_t i = 0; i < key_length; ++i)
     {
         hash += size_t(key[i]) * size_t(pow(factor, i));
     }
 
-    return hash % size;
+    return hash % table_size;
 }

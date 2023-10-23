@@ -26,12 +26,10 @@ void Print_command_info();
 
 
 
-
-
 int main()
 {
 
-    size_t num_key, table_size;
+    size_t num_key;
     std::string str_key;
 
     char command;
@@ -69,20 +67,16 @@ int main()
         case Menu_commands::DIVISION_HASH:
             std::cout << "Enter key value: ";
             std::cin >> num_key;
-            std::cout << "Enter table size: ";
-            std::cin >> table_size;
 
-            std::cout << "Hashing result: " << division_hash(num_key, table_size) << '\n';
+            std::cout << "Hashing result: " << division_hash(num_key) << '\n';
             break;
 
 
         case Menu_commands::MULTIPLICATION_HASH:
             std::cout << "Enter key value: ";
             std::cin >> num_key;
-            std::cout << "Enter table size: ";
-            std::cin >> table_size;
 
-            std::cout << "Hashing result: " << multiplication_hash(num_key, table_size) << '\n';
+            std::cout << "Hashing result: " << multiplication_hash(num_key) << '\n';
             break;
 
 
@@ -90,10 +84,8 @@ int main()
             std::cout << "Enter key value: ";
             while (std::cin.peek() == '\n') std::cin.ignore();
             std::getline(std::cin, str_key);
-            std::cout << "Enter table size: ";
-            std::cin >> table_size;
 
-            std::cout << "Hashing result: " << string_hash(str_key.c_str(), table_size) << '\n';
+            std::cout << "Hashing result: " << string_hash(str_key.c_str()) << '\n';
             break;
 
 
