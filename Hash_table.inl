@@ -76,10 +76,87 @@ Hash_table<TKey, TValue>::~Hash_table()
 	delete[] m_table;
 }
 
+
+
 template<class TKey, class TValue>
-inline size_t Hash_table<TKey, TValue>::get_hash(const TKey& key) const
+size_t Hash_table<TKey, TValue>::get_hash(const TKey& key) const
 {
 	return key % m_size;
 }
+
+
+
+template<class TKey, class TValue>
+bool Hash_table<TKey, TValue>::contains_key(const TKey& key) const
+{
+
+	for (auto& i : m_table[get_hash(key)])
+	{
+		if (i.first == key)
+		{
+			return true;
+		}
+	}
+
+	return false;
+
+}
+
+
+
+template<class TKey, class TValue>
+TValue& Hash_table<TKey, TValue>::at(const TKey& key)
+{
+
+	for (auto& i : m_table[get_hash(key)])
+	{
+		if(i.first == key)
+		{
+			return i.second;
+		}
+	}
+
+	throw std::out_of_range("There isn't a value with such key");
+	
+}
+
+template<class TKey, class TValue>
+const TValue& Hash_table<TKey, TValue>::at(const TKey& key) const
+{
+
+	for (auto& i : m_table[get_hash(key)])
+	{
+		if (i.first == key)
+		{
+			return i.second;
+		}
+	}
+
+	throw std::out_of_range("There isn't a value with such key");
+
+}
+
+
+
+template<class TKey, class TValue>
+TValue& Hash_table<TKey, TValue>::operator[](const TKey& key)
+{
+
+	try
+	{
+		return at(key);
+	}
+	catch(const std::out_of_range& e)
+	{
+		// TODO: Insert here
+	}
+
+}
+
+
+
+
+
+
 
 

@@ -36,7 +36,26 @@ public:
 	~Hash_table();
 
 
+
 	size_t get_hash(const TKey& key) const;
+
+	bool contains_key(const TKey& key) const;
+
+
+
+	TValue& at(const TKey& key);
+
+	const TValue& at(const TKey& key) const;
+
+
+
+
+
+
+
+	TValue& operator[](const TKey& key);
+
+	
 
 };
 
