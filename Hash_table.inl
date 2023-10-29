@@ -76,4 +76,10 @@ Hash_table<TKey, TValue>::~Hash_table()
 	delete[] m_table;
 }
 
+template<class TKey, class TValue>
+inline size_t Hash_table<TKey, TValue>::get_hash(const TKey& key) const
+{
+	return key % m_size;
+}
+
 

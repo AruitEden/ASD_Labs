@@ -36,6 +36,7 @@ public:
 	~Hash_table();
 
 
+	size_t get_hash(const TKey& key) const;
 
 };
 
