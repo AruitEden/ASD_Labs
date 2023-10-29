@@ -16,7 +16,9 @@ private:
 
 
 
-	static const int max_chains = 3;
+	static const int max_nodes = 3;
+
+	size_t m_capacity;
 
 	size_t m_size;
 
@@ -40,6 +42,8 @@ public:
 	size_t get_hash(const TKey& key) const;
 
 	bool contains_key(const TKey& key) const;
+
+
 
 	size_t size() const;
 
