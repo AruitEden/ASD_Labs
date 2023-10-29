@@ -105,6 +105,20 @@ bool Hash_table<TKey, TValue>::contains_key(const TKey& key) const
 
 
 template<class TKey, class TValue>
+size_t Hash_table<TKey, TValue>::size() const
+{
+	return m_size;
+}
+
+template<class TKey, class TValue>
+size_t Hash_table<TKey, TValue>::max_size() const
+{
+	return m_size * max_chains;
+}
+
+
+
+template<class TKey, class TValue>
 TValue& Hash_table<TKey, TValue>::at(const TKey& key)
 {
 

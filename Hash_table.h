@@ -41,6 +41,10 @@ public:
 
 	bool contains_key(const TKey& key) const;
 
+	size_t size() const;
+
+	size_t max_size() const;
+
 
 
 	TValue& at(const TKey& key);
