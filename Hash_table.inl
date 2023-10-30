@@ -134,8 +134,6 @@ size_t Hash_table<TKey, TValue>::size() const
 	return m_size;
 }
 
-
-
 template<class TKey, class TValue>
 size_t Hash_table<TKey, TValue>::max_size() const
 {
@@ -194,6 +192,24 @@ void Hash_table<TKey, TValue>::insert(const Pair<TKey, TValue>& pair)
 	m_table[index].push_front(pair);
 	
 	++m_size;
+
+}
+
+template<class TKey, class TValue>
+void Hash_table<TKey, TValue>::erase(const TKey& key)
+{
+
+	size_t index = get_hash(key);
+
+	for (auto it = m_table[index].begin(); it != m_table[index].end(); ++it)
+	{
+		if ((*it).first == key)
+		{
+			m_table[index].erase(it);
+			--m_size;
+			return;
+		}
+	}
 
 }
 

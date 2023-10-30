@@ -63,11 +63,11 @@ public:
 
 	void insert(const Pair<TKey, TValue>& pair);
 
+	void erase(const TKey& key);
+
 
 
 	TValue& operator[](const TKey& key);
-
-	
 
 };
 
