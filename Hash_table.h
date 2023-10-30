@@ -23,6 +23,10 @@ private:
 	size_t m_size;
 
 	bucket* m_table;
+
+
+
+	void rehash();
 	
 
 public:
@@ -57,7 +61,7 @@ public:
 
 
 
-
+	void insert(const Pair<TKey, TValue>& pair);
 
 
 

@@ -45,10 +45,9 @@ Hash_table<TKey, TValue>& Hash_table<TKey, TValue>::operator=(const Hash_table<T
 template<class TKey, class TValue>
 Hash_table<TKey, TValue>::Hash_table(Hash_table<TKey, TValue>&& other) : m_capacity(other.m_capacity), m_size(other.m_size), m_table(other.m_table)
 {
-	// TODO: Rehash here
-	/*other.m_size = 0;
-	other.m_size = 0; 
-	other.m_table = nullptr;*/
+	other.m_capacity = 1;
+	other.m_size = 0;
+	other.m_table = new bucket[1]{};
 }
 
 template<class TKey, class TValue>
@@ -61,10 +60,13 @@ Hash_table<TKey, TValue>& Hash_table<TKey, TValue>::operator=(Hash_table<TKey, T
 	}
 
 	delete[] m_table;
+	m_capacity = other.m_capacity;
 	m_size = other.m_size;
 	m_table = other.m_table;
 
-	// TODO: Rehash here
+	other.m_capacity = 1;
+	other.m_size = 0;
+	other.m_table = new bucket[1]{};
 
 	return *this;
 
@@ -101,6 +103,26 @@ bool Hash_table<TKey, TValue>::contains_key(const TKey& key) const
 	}
 
 	return false;
+
+}
+
+
+
+template<class TKey, class TValue>
+void Hash_table<TKey, TValue>::rehash()
+{
+
+	Hash_table<TKey, TValue> temp(m_capacity * 2);
+
+	for (size_t i = 0; i < m_capacity; ++i)
+	{
+		for (auto& b : m_table[i])
+		{
+			temp.insert(b);
+		}
+	}
+
+	(*this) = std::move(temp);
 
 }
 
@@ -157,6 +179,27 @@ const TValue& Hash_table<TKey, TValue>::at(const TKey& key) const
 
 
 template<class TKey, class TValue>
+void Hash_table<TKey, TValue>::insert(const Pair<TKey, TValue>& pair)
+{
+
+	size_t index = get_hash(pair.first);
+
+	if(m_table[index].size() == max_nodes) 
+	{
+		rehash();
+		insert(pair);
+		return;
+	}
+
+	m_table[index].push_front(pair);
+	
+	++m_size;
+
+}
+
+
+
+template<class TKey, class TValue>
 TValue& Hash_table<TKey, TValue>::operator[](const TKey& key)
 {
 
@@ -164,9 +207,10 @@ TValue& Hash_table<TKey, TValue>::operator[](const TKey& key)
 	{
 		return at(key);
 	}
-	catch(const std::out_of_range& e)
+	catch(const std::out_of_range&)
 	{
-		// TODO: Insert here
+		insert(Pair<TKey, TValue>(key, TValue()));
+		return at(key);
 	}
 
 }
