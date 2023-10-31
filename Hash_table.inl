@@ -203,7 +203,7 @@ void Hash_table<TKey, TValue>::erase(const TKey& key)
 
 	for (auto it = m_table[index].begin(); it != m_table[index].end(); ++it)
 	{
-		if ((*it).first == key)
+		if (it->first == key)
 		{
 			m_table[index].erase(it);
 			--m_size;

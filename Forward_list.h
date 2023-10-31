@@ -240,9 +240,9 @@ public:
 		return m_element->get_data();
 	}
 
-	T& operator->()
+	T* operator->()
 	{
-		return m_element->get_data();
+		return &(m_element->get_data());
 	}
 	
 
