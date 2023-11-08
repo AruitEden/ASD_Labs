@@ -1,0 +1,15 @@
+﻿  ASD_Lab7.cpp
+C:\Users\user\Documents\2 Cours\ASD\ASD_Lab7\ASD_Lab7\Hash_Table.inl(111,8): warning C4244: инициализация: преобразование "double" в "int", возможна потеря данных
+C:\Users\user\Documents\2 Cours\ASD\ASD_Lab7\ASD_Lab7\Hash_Table.inl(110,1): message : во время компиляции функции-члена класс шаблон "void Hash_Table<int>::insert(const int &,const Value &)"
+          with
+          [
+              Value=int
+          ]
+C:\Users\user\Documents\2 Cours\ASD\ASD_Lab7\ASD_Lab7\ASD_Lab7.cpp(65,16): message : выполняется компиляция ссылки на экземпляр шаблон функции "void Hash_Table<int>::insert(const int &,const Value &)"
+          with
+          [
+              Value=int
+          ]
+C:\Users\user\Documents\2 Cours\ASD\ASD_Lab7\ASD_Lab7\ASD_Lab7.cpp(42,28): message : выполняется компиляция ссылки на экземпляр класс шаблон функции "Hash_Table<int>"
+C:\Users\user\Documents\2 Cours\ASD\ASD_Lab7\ASD_Lab7\Hash_Table.inl(131,1): warning C4267: =: преобразование из "size_t" в "int"; возможна потеря данных
+  ASD_Lab7.vcxproj -> C:\Users\user\Documents\2 Cours\ASD\ASD_Lab7\x64\Debug\ASD_Lab7.exe
