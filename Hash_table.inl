@@ -120,3 +120,25 @@ Hash_table<TKey, TValue>::~Hash_table()
 	delete[] m_table;
 
 }
+
+
+
+template<class TKey, class TValue>
+size_t Hash_table<TKey, TValue>::get_hash(const TKey& key) const
+{
+	return key % m_capacity;
+}
+
+
+
+template<class TKey, class TValue>
+size_t Hash_table<TKey, TValue>::size() const
+{
+	return m_size;
+}
+
+template<class TKey, class TValue>
+size_t Hash_table<TKey, TValue>::max_size() const
+{
+	return m_capacity;
+}
