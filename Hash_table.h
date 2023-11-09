@@ -17,6 +17,8 @@ private:
 
 	Pair<TKey, TValue>** m_table;
 
+	Pair<TKey, TValue>* m_dummy;
+
 
 
 	void rehash();
