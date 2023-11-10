@@ -113,8 +113,8 @@ template<class TKey, class TValue>
 Hash_table<TKey, TValue>::~Hash_table()
 {
 
-	delete dummy;
-	dummy = nullptr;
+	delete m_dummy;
+	m_dummy = nullptr;
 
 	for (size_t i = 0; i < m_capacity; i++)
 	{
@@ -146,3 +146,42 @@ size_t Hash_table<TKey, TValue>::max_size() const
 {
 	return m_capacity;
 }
+
+
+
+template<class TKey, class TValue>
+bool Hash_table<TKey, TValue>::is_prime(size_t n) const
+{
+
+	if (n == 1)
+	{
+		return false;
+	}
+
+	for (size_t i = 2; i * i <= n; i++)
+	{
+		if (n % i == 0)
+		{
+			return false;
+		}
+	}
+
+	return true;
+
+}
+
+template<class TKey, class TValue>
+size_t Hash_table<TKey, TValue>::next_prime(size_t n) const
+{
+
+	while (!is_prime(n))
+	{
+		++n;
+	}
+
+	return n;
+
+}
+
+
+
