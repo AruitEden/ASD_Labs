@@ -17,9 +17,7 @@ private:
 
 	Pair<TKey, TValue>** m_table;
 
-
-
-	const Pair<TKey, TValue>* m_dummy;
+	Pair<TKey, TValue>* m_dummy;
 
 
 

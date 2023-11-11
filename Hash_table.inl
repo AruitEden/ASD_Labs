@@ -9,10 +9,10 @@ Hash_table<TKey, TValue>::Hash_table(size_t size) :
 	m_capacity(size), m_size(0), m_table(new Pair<TKey, TValue>*[size] {}), m_dummy(new Pair<TKey, TValue>()) {}
 
 
-/*
+
 template<class TKey, class TValue>
 Hash_table<TKey, TValue>::Hash_table(const Hash_table<TKey, TValue>& other)
-	: m_capacity(other.m_capacity), m_size(other.m_size), m_table(new Pair<TKey, TValue>*[other.m_size]), m_dummy(new Pair<TKey, TValue>(-1, -1))
+	: m_capacity(other.m_capacity), m_size(other.m_size), m_table(new Pair<TKey, TValue>*[other.m_capacity]), m_dummy(new Pair<TKey, TValue>())
 {
 
 	for (size_t i = 0; i < m_capacity; i++)
@@ -20,7 +20,14 @@ Hash_table<TKey, TValue>::Hash_table(const Hash_table<TKey, TValue>& other)
 
 		if(other.m_table[i] != nullptr)
 		{
-			m_table[i] = new Pair<TKey, TValue>(*other.m_table[i]);
+			if(other.m_table[i] != other.m_dummy)
+			{
+				m_table[i] = new Pair<TKey, TValue>(*other.m_table[i]);
+			}
+			else
+			{
+				m_table[i] = m_dummy;
+			}
 		}
 		else
 		{
@@ -41,22 +48,35 @@ Hash_table<TKey, TValue>& Hash_table<TKey, TValue>::operator=(const Hash_table<T
 	}
 
 
+	delete m_dummy;
+	m_dummy = nullptr;
+
 	for (size_t i = 0; i < m_capacity; i++)
 	{
 		delete m_table[i];
 	}
+
 	delete[] m_table;
+
 
 	m_capacity = other.m_capacity;
 	m_size = other.m_size;
 	m_table = new Pair<TKey, TValue>*[other.m_capacity];
+	m_dummy = new Pair<TKey, TValue>();
 
 	for (size_t i = 0; i < m_capacity; i++)
 	{
 
 		if (other.m_table[i] != nullptr)
 		{
-			m_table[i] = new Pair<TKey, TValue>(*other.m_table[i]);
+			if (other.m_table[i] != other.m_dummy)
+			{
+				m_table[i] = new Pair<TKey, TValue>(*other.m_table[i]);
+			}
+			else
+			{
+				m_table[i] = m_dummy;
+			}
 		}
 		else
 		{
@@ -73,11 +93,12 @@ Hash_table<TKey, TValue>& Hash_table<TKey, TValue>::operator=(const Hash_table<T
 
 template<class TKey, class TValue>
 Hash_table<TKey, TValue>::Hash_table(Hash_table<TKey, TValue>&& other)
-	: m_capacity(other.m_capacity), m_size(other.m_size), m_table(other.m_table)
+	: m_capacity(other.m_capacity), m_size(other.m_size), m_table(other.m_table), m_dummy(other.m_dummy)
 {
 	other.m_capacity = 1;
 	other.m_size = 0;
 	other.m_table = new Pair<TKey, TValue>* [1] {};
+	other.m_dummy = new Pair<TKey, TValue>();
 }
 
 template<class TKey, class TValue>
@@ -89,24 +110,32 @@ Hash_table<TKey, TValue>& Hash_table<TKey, TValue>::operator=(Hash_table<TKey, T
 		return *this;
 	}
 
+
+	delete m_dummy;
+	m_dummy = nullptr;
+
 	for (size_t i = 0; i < m_capacity; i++)
 	{
 		delete m_table[i];
 	}
+
 	delete[] m_table;
+
 
 	m_capacity = other.m_capacity;
 	m_size = other.m_size;
 	m_table = other.m_table;
+	m_dummy = other.m_dummy;
 
 	other.m_capacity = 1;
 	other.m_size = 0;
 	other.m_table = new Pair<TKey, TValue>* [1] {};
+	other.m_dummy = new Pair<TKey, TValue>();
 
 	return *this;
 
 }
-*/
+
 
 
 template<class TKey, class TValue>
@@ -193,6 +222,26 @@ size_t Hash_table<TKey, TValue>::make_step(size_t index) const
 
 
 
+template<class TKey, class TValue>
+void Hash_table<TKey, TValue>::rehash()
+{
+
+	Hash_table rehashed(m_capacity * 2);
+
+	for (size_t i = 0; i < m_capacity; i++)
+	{
+		if (m_table[i] != nullptr && m_table[i] != m_dummy)
+		{
+			rehashed.insert(*m_table[i]);
+		}
+	}
+
+	(*this) = std::move(rehashed);
+
+}
+
+
+
 template <class TKey, class TValue>
 TValue& Hash_table<TKey, TValue>::at(const TKey& key)
 {
@@ -232,9 +281,9 @@ template<class TKey, class TValue>
 void Hash_table<TKey, TValue>::insert(const Pair<TKey, TValue>& pair)
 {
 
-	if (float(m_size) / float(m_capacity) > 0.7f)
+	if (float(m_size) / float(m_capacity) > 0.65f)
 	{
-		//TODO: rehash();
+		rehash();
 	}
 
 
@@ -247,6 +296,7 @@ void Hash_table<TKey, TValue>::insert(const Pair<TKey, TValue>& pair)
 		if (m_table[index] == nullptr || m_table[index] == m_dummy)
 		{
 			m_table[index] = new Pair<TKey, TValue>(pair);
+			++m_size;
 			return;
 		}
 
