@@ -6,7 +6,7 @@
 
 template<class TKey, class TValue>
 Hash_table<TKey, TValue>::Hash_table(size_t size) :
-	m_capacity(size), m_size(0), m_table(new Pair<TKey, TValue>*[size] {}), m_dummy(new Pair<TKey, TValue>(-1, -1)) {}
+	m_capacity(size), m_size(0), m_table(new Pair<TKey, TValue>*[size] {}), m_dummy(new Pair<TKey, TValue>()) {}
 
 
 /*
@@ -183,5 +183,75 @@ size_t Hash_table<TKey, TValue>::next_prime(size_t n) const
 
 }
 
+template<class TKey, class TValue>
+size_t Hash_table<TKey, TValue>::make_step(size_t index) const
+{
+
+	return next_prime(m_capacity + 1) % m_capacity;
+
+}
 
 
+
+template <class TKey, class TValue>
+TValue& Hash_table<TKey, TValue>::at(const TKey& key)
+{
+
+	size_t original_index = get_hash(key);
+	size_t index = original_index;
+	size_t step = make_step(index);
+
+	do {
+
+		if (m_table[index] != nullptr)
+		{
+			if (m_table[index] != m_dummy )
+			{
+				if (m_table[index]->first == key)
+				{
+					return m_table[index]->second;
+				}
+			}
+		}
+		else
+		{
+			break;
+		}
+
+		index = (index + step) % m_capacity;
+
+	} while (index != original_index);
+
+	throw std::out_of_range("There isn't a value with such key");
+
+}
+
+
+
+template<class TKey, class TValue>
+void Hash_table<TKey, TValue>::insert(const Pair<TKey, TValue>& pair)
+{
+
+	if (float(m_size) / float(m_capacity) > 0.7f)
+	{
+		//TODO: rehash();
+	}
+
+
+	size_t original_index = get_hash(pair.first);
+	size_t index = original_index;
+	size_t step = make_step(index);
+
+	do {
+
+		if (m_table[index] == nullptr || m_table[index] == m_dummy)
+		{
+			m_table[index] = new Pair<TKey, TValue>(pair);
+			return;
+		}
+
+		index = (index + step) % m_capacity;
+
+	} while (index != original_index);
+
+}

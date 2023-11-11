@@ -21,13 +21,13 @@ private:
 
 	const Pair<TKey, TValue>* m_dummy;
 
-	static const int probe_count = 3;
-
 
 
 	bool is_prime(size_t n) const;
 
 	size_t next_prime(size_t n) const;
+
+	size_t make_step(size_t index) const;
 
 
 
