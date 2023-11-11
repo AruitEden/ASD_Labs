@@ -30,6 +30,8 @@ private:
 
 
 	void rehash();
+
+	void clear();
 	
 
 public:

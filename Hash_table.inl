@@ -48,15 +48,7 @@ Hash_table<TKey, TValue>& Hash_table<TKey, TValue>::operator=(const Hash_table<T
 	}
 
 
-	delete m_dummy;
-	m_dummy = nullptr;
-
-	for (size_t i = 0; i < m_capacity; i++)
-	{
-		delete m_table[i];
-	}
-
-	delete[] m_table;
+	clear();
 
 
 	m_capacity = other.m_capacity;
@@ -111,15 +103,7 @@ Hash_table<TKey, TValue>& Hash_table<TKey, TValue>::operator=(Hash_table<TKey, T
 	}
 
 
-	delete m_dummy;
-	m_dummy = nullptr;
-
-	for (size_t i = 0; i < m_capacity; i++)
-	{
-		delete m_table[i];
-	}
-
-	delete[] m_table;
+	clear();
 
 
 	m_capacity = other.m_capacity;
@@ -141,17 +125,7 @@ Hash_table<TKey, TValue>& Hash_table<TKey, TValue>::operator=(Hash_table<TKey, T
 template<class TKey, class TValue>
 Hash_table<TKey, TValue>::~Hash_table()
 {
-
-	delete m_dummy;
-	m_dummy = nullptr;
-
-	for (size_t i = 0; i < m_capacity; i++)
-	{
-		delete m_table[i];
-	}
-
-	delete[] m_table;
-
+	clear();
 }
 
 
@@ -160,6 +134,39 @@ template<class TKey, class TValue>
 size_t Hash_table<TKey, TValue>::get_hash(const TKey& key) const
 {
 	return key % m_capacity;
+}
+
+template<class TKey, class TValue>
+bool Hash_table<TKey, TValue>::contains_key(const TKey& key) const
+{
+	
+	size_t original_index = get_hash(key);
+	size_t index = original_index;
+	size_t step = make_step(index);
+
+	do {
+
+		if (m_table[index] != nullptr)
+		{
+			if (m_table[index] != m_dummy)
+			{
+				if (m_table[index]->first == key)
+				{
+					return true;
+				}
+			}
+		}
+		else
+		{
+			break;
+		}
+
+		index = (index + step) % m_capacity;
+
+	} while (index != original_index);
+
+	return false;
+
 }
 
 
@@ -240,6 +247,24 @@ void Hash_table<TKey, TValue>::rehash()
 
 }
 
+template<class TKey, class TValue>
+void Hash_table<TKey, TValue>::clear()
+{
+
+	for (size_t i = 0; i < m_capacity; i++)
+	{
+		if (m_table[i] != m_dummy)
+		{
+			delete m_table[i];
+		}
+	}
+
+	delete m_dummy;
+
+	delete[] m_table;
+
+}
+
 
 
 template <class TKey, class TValue>
@@ -299,9 +324,47 @@ void Hash_table<TKey, TValue>::insert(const Pair<TKey, TValue>& pair)
 			++m_size;
 			return;
 		}
+		if (m_table[index]->first == pair.first)
+		{
+			delete m_table[index];
+			m_table[index] = new Pair<TKey, TValue>(pair);
+			++m_size;
+			return;
+		}
 
 		index = (index + step) % m_capacity;
 
 	} while (index != original_index);
+
+}
+
+template<class TKey, class TValue>
+void Hash_table<TKey, TValue>::erase(const TKey& key)
+{
+
+	size_t index = get_hash(key);
+
+	if (m_table[index] == nullptr || m_table[index] == m_dummy)
+	{
+		return;
+	}
+
+	size_t next_step = (index + make_step(index)) % m_capacity;
+
+	delete m_table[index];
+	if (m_table[next_step] == nullptr)
+	{
+		m_table[index] = nullptr;
+		--m_size;
+	}
+	else if (get_hash(m_table[next_step]->first) == index || m_table[next_step] == m_dummy)
+	{
+		m_table[index] = m_dummy;
+	}
+	else
+	{
+		m_table[index] = nullptr;
+		--m_size;
+	}
 
 }
