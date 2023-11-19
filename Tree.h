@@ -1,5 +1,7 @@
 #pragma once
 #include <iostream>
+#include "Stack.h"
+#include <stack>
 
 class Tree
 {
@@ -33,6 +35,15 @@ private:
 	void deleteNode(Node*& node, const int& data);
 
 	bool searchNode(Node*& node, const int& data);
+
+
+
+	bool search_prev(Node*& node, const int& data);
+
+	bool search_post(Node*& node, const int& data);
+
+	bool search_in(Node*& node, const int& data);
+
 
 
 public:
@@ -75,6 +86,17 @@ public:
 	}
 
 	bool search(const int& data) { return searchNode(root, data); }
+
+
+
+	bool search1(const int& data) { return search_prev(root, data); }
+
+	bool search2(const int& data) { return search_post(root, data); }
+
+	bool search3(const int& data) { return search_in(root, data); }
+
+
+	void print_in(Node* node);
 
 
 	int getHeight() { height(root); }

@@ -33,10 +33,38 @@ int main()
 
 	std::cout << "\n\n";
 
-	if(tree.search(9))
+	if(tree.search(5))
 	std::cout << "True";
 	else 
 	{
 		std::cout << "False";
+	}
+
+	std::cout << "\n\n";
+
+	tree.search1(8);
+
+
+
+	std::cout << "\n\n";
+
+	//tree.search2(5);
+	if (tree.search2(9))
+		std::cout << "\nTrue";
+	else
+	{
+		std::cout << "\nFalse";
+	}
+
+
+	std::cout << "\n\n";
+
+
+
+	if (tree.search3(6))
+		std::cout << "\nTrue";
+	else
+	{
+		std::cout << "\nFalse";
 	}
 }
