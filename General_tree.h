@@ -5,8 +5,8 @@
 // TODO:
 // 
 // 1) operations:
-// insert
-// erase
+// insert	//DONE
+// remove 
 // search
 // 
 // 2) traversals:
@@ -58,11 +58,94 @@ private:
 		{
 			insertion(root->child, value);
 		}
-		else
+		else if (value < root->data)
 		{
 			insertion(root->sibling, value);
 		}
+		else
+		{
+			return;
+		}
 		
+	}
+
+	void removal(Node<T>* root, Node<T>*& prev, const T& value)
+	{
+
+		if (root == nullptr)
+		{
+			return;
+		}
+
+		if (root->data == value)
+		{
+
+			bool sibling = prev->sibling == root;
+
+			if (sibling) 
+			{
+
+				if (root->child != nullptr)
+				{
+
+					Node<T>* next = root->sibling;
+
+					prev->sibling = root->child;
+
+					Node<T>* i;
+					for (i = root->child; i->sibling != nullptr; i = i->sibling);
+					i->sibling = next;
+					delete root;
+
+					return;
+
+				}
+				else
+				{
+					prev->sibling = root->sibling;
+					delete root;
+					return;
+				}
+
+			}
+			else
+			{
+
+				if (root->sibling != nullptr)
+				{
+
+					Node<T>* next = root->child;
+
+					prev->child = root->sibling;
+
+					Node<T>* i;
+					for (i = root->sibling; i->child != nullptr; i = i->child);
+					i->child = next;
+					delete root;
+
+					return;
+
+				}
+				else
+				{
+					prev->child = root->child;
+					delete root;
+					return;
+				}
+
+			}
+
+		}
+
+		if (value > root->data)
+		{
+			removal(root->child, root, value);
+		}
+		else
+		{
+			removal(root->sibling, root, value);
+		}
+
 	}
 
 
@@ -84,6 +167,20 @@ public:
 		}
 
 		insertion(root->child, value);
+
+	}
+
+	void remove(const T& value)
+	{
+
+		if (root->data == value)
+		{
+			root->data = root->child->data;
+			removal(root->child, root, root->data);
+			return;
+		}
+
+		removal(root->child, root, value);
 
 	}
 
