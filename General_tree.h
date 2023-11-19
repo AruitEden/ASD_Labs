@@ -5,9 +5,9 @@
 // TODO:
 // 
 // 1) operations:
-// insert	//DONE
-// remove 
-// search
+// insert	DONE
+// remove	DONE
+// search	
 // 
 // 2) traversals:
 // inorder
@@ -148,6 +148,29 @@ private:
 
 	}
 
+	bool search(Node<T>*& root, const T& value) const
+	{
+
+		if (root == nullptr)
+		{
+			return false;
+		}
+
+		if (value > root->data)
+		{
+			search(root->child, value);
+		}
+		else if (value < root->data)
+		{
+			search(root->sibling, value);
+		}
+		else
+		{
+			return true;
+		}
+
+	}
+
 
 public:
 
@@ -181,6 +204,22 @@ public:
 		}
 
 		removal(root->child, root, value);
+
+	}
+
+	bool contains(const T& value) const
+	{
+
+		if (root == nullptr)
+		{
+			return false;
+		}
+		if (root->data == value)
+		{
+			return true;
+		}
+
+		return search(root->child, value);
 
 	}
 

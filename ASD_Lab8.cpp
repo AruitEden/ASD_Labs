@@ -26,8 +26,11 @@ int main()
     tree.insert(24);
     tree.insert(23);
 
+    int value = 25;
 
-    tree.remove(44);
+    std::cout << std::boolalpha << tree.contains(value) << '\n';
+    tree.remove(value);
+    std::cout << std::boolalpha << tree.contains(value) << '\n';
 
     /*tree.remove(31);
     tree.remove(48);*/
