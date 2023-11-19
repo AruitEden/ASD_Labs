@@ -26,10 +26,10 @@ int main()
     tree.insert(24);
     tree.insert(23);
 
-    int value = 24;
+    int value = 44;
 
     std::cout << std::boolalpha << tree.contains(value) << '\n';
-    std::cout << std::boolalpha << tree.preorder_search(value) << '\n';
+    std::cout << std::boolalpha << tree.postorder_search(value) << '\n';
 
 
     /*tree.remove(31);

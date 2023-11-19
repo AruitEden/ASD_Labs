@@ -5,14 +5,14 @@
 // TODO:
 // 
 // 1) operations:
-// insert	DONE
-// remove	DONE
-// search	
+// insert		DONE
+// remove		DONE
+// search		DONE
 // 
 // 2) traversals:
 // inorder
 // postorder
-// preorder
+// preorder		DONE
 // 
 // 
 //
@@ -188,9 +188,37 @@ private:
 			return true;
 		}
 
-		if(!preorder(root->child, value))
+		if (!preorder(root->child, value))
 		{
 			return preorder(root->sibling, value);
+		}
+		else
+		{
+			return true;
+		}
+
+	}
+
+	bool postorder(Node<T>* root, const T& value) const
+	{
+
+		if (root == nullptr)
+		{
+			return false;
+		}
+
+		if (!postorder(root->child, value))
+		{
+
+			std::cout << root->data << ' ';
+
+			if (root->data == value)
+			{
+				return true;
+			}
+
+			return postorder(root->sibling, value);
+
 		}
 		else
 		{
@@ -251,6 +279,8 @@ public:
 
 	}
 
+
+
 	bool preorder_search(const T& value) const // Прямий обхід
 	{
 
@@ -270,6 +300,25 @@ public:
 
 	}
 
+	bool postorder_search(const T& value) const // Зворотній обхід
+	{
+
+		if (root == nullptr)
+		{
+			return false;
+		}
+
+		if (postorder(root->child, value))
+		{
+			return true;
+		}
+		else
+		{
+			std::cout << root->data << ' ';
+			return root->data == value;
+		}
+
+	}
 
 };
 
