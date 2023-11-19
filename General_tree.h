@@ -320,9 +320,42 @@ public:
 
 	}
 
+
+
+	bool preorder_print() const
+	{
+
+		if (root == nullptr)
+		{
+			return false;
+		}
+
+		std::cout << root->data << ' ';
+
+		return preorder(root->child, value);
+
+	}
+
+	bool postorder_print() const
+	{
+
+		if (root == nullptr)
+		{
+			return false;
+		}
+
+		if (postorder(root->child, value))
+		{
+			return false;
+		}
+		else
+		{
+			std::cout << root->data << ' ';
+			return root->data == value;
+		}
+
+	}
+
 };
 
-
-
-#include "General_tree.inl"
 
