@@ -31,18 +31,39 @@ private:
 	{
 
 		T data;
-		Node<T>* parent;
 		Node<T>* sibling;
 		Node<T>* child;
 
 		Node(const T& data)
-			: data(data), parent(nullptr), sibling(nullptr), child(nullptr) {}
+			: data(data), sibling(nullptr), child(nullptr) {}
 
 	};
 
 
 
 	Node<T>* root;
+
+
+
+	void insertion(Node<T>*& root, const T& value)
+	{
+
+		if (root == nullptr)
+		{
+			root = new Node<T>(value);
+			return;
+		}
+
+		if (value > root->data)
+		{
+			insertion(root->child, value);
+		}
+		else
+		{
+			insertion(root->sibling, value);
+		}
+		
+	}
 
 
 public:
@@ -52,17 +73,17 @@ public:
 	General_tree(const T& root) : root(new Node<T>(root)) {}
 
 
+
 	void insert(const T& value)
 	{
 
-		Node<T>* current = root;
-
-		while(current != nullptr)
+		if (root == nullptr)
 		{
-
+			root = new Node<T>(value);
+			return;
 		}
 
-
+		insertion(root->child, value);
 
 	}
 
