@@ -172,6 +172,34 @@ private:
 	}
 
 
+
+	bool preorder(Node<T>* root, const T& value) const
+	{
+
+		if (root == nullptr) 
+		{
+			return false;
+		}
+
+		std::cout << root->data << ' ';
+
+		if (root->data == value)
+		{
+			return true;
+		}
+
+		if(!preorder(root->child, value))
+		{
+			return preorder(root->sibling, value);
+		}
+		else
+		{
+			return true;
+		}
+
+	}
+
+
 public:
 
 	General_tree() : root(nullptr) {}
@@ -220,6 +248,25 @@ public:
 		}
 
 		return search(root->child, value);
+
+	}
+
+	bool preorder_search(const T& value) const // Прямий обхід
+	{
+
+		if (root == nullptr)
+		{
+			return false;
+		}
+
+		std::cout << root->data << ' ';
+
+		if (root->data == value)
+		{
+			return true;
+		}
+
+		return preorder(root->child, value);
 
 	}
 
