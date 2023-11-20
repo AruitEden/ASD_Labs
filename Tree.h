@@ -50,6 +50,28 @@ private:
 
 	}
 
+	Node<T>* searching(Node<T>* root, const T& key)
+	{
+
+		if (root == nullptr)
+		{
+			return nullptr;
+		}
+		if (key > root->key)
+		{
+			searching(root->right, key);
+		}
+		else if (key < root->key)
+		{
+			searching(root->left, key);
+		}
+		else
+		{
+			return root;
+		}
+
+	}
+
 
 public:
 
@@ -99,6 +121,22 @@ public:
 
 
 
+	T* search(const T& key)
+	{
+
+		Node<T>* result = searching(root, key);
+
+		if (result == nullptr) 
+		{
+			return nullptr;
+		}
+		else
+		{
+			return result;
+		}
+
+	}
+
 	void insert(const T& key)
 	{
 		insertion(root, key);
@@ -106,6 +144,13 @@ public:
 
 	void remove(const T& key)
 	{
+
+		if (root == nullptr)
+		{
+			return;
+		}
+
+
 
 	}
 
