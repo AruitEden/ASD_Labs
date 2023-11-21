@@ -124,6 +124,22 @@ private:
 
 	}
 
+	void clear(Node<T>* root)
+	{
+
+		if (root == nullptr)
+		{
+			return;
+		}
+
+		clear(root->left);
+
+		clear(root->right);
+
+		delete root;
+
+	}
+
 
 
 	void preorder_travesal(Node<T>* root)
@@ -180,6 +196,11 @@ public:
 	Tree() : root(nullptr) {}
 
 	Tree(const T& key) : root(new Node<T>(key)) {}
+
+	~Tree()
+	{
+		clear(root);
+	}
 
 
 
