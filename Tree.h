@@ -234,7 +234,7 @@ public:
 		}
 		else
 		{
-			return result;
+			return &result->key;
 		}
 
 	}
@@ -267,4 +267,3 @@ public:
 	}
 
 };
-
