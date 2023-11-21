@@ -72,10 +72,78 @@ private:
 
 	}
 
+	Node<T>* removal(Node<T>* root, const T& key)
+	{
+
+		if (root == nullptr)
+		{
+			return nullptr;
+		}
+
+		if (root->key > key)
+		{
+			root->left = removal(root->left, key);
+		}
+		else if (root->key < key)
+		{
+			root->right = removal(root->right, key);
+		}
+		else
+		{
+
+			if (root->left == nullptr)
+			{
+				Node<T>* temp = root->right;
+				delete root;
+				return temp;
+			}
+			else if (root->right == nullptr)
+			{
+				Node<T>* temp = root->left;
+				delete root;
+				return temp;
+			}
+			else
+			{
+
+				Node<T>* temp = root->right;
+
+				while (temp->left != nullptr)
+				{
+					temp = temp->left;
+				}
+
+				root->key = temp->key;
+				root->right = removal(root->right, temp->key);
+
+			}
+
+		}
+
+		return root;
+
+	}
+
+	void in_travesal(Node<T>* root)
+	{
+
+		if (root == nullptr)
+		{
+			return;
+		}
+
+		in_travesal(root->left);
+
+		std::cout << root->key << ' ';
+
+		in_travesal(root->right);
+
+	}
+
 
 public:
 
-	Tree() : root(nullptr)) {}
+	Tree() : root(nullptr) {}
 
 	Tree(const T& key) : root(new Node<T>(key)) {}
 
@@ -145,12 +213,16 @@ public:
 	void remove(const T& key)
 	{
 
-		if (root == nullptr)
-		{
-			return;
-		}
+		removal(root, key);
+
+	}
 
 
+
+	void print_in()
+	{
+
+		in_travesal(root);
 
 	}
 
