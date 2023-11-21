@@ -124,7 +124,9 @@ private:
 
 	}
 
-	void in_travesal(Node<T>* root)
+
+
+	void preorder_travesal(Node<T>* root)
 	{
 
 		if (root == nullptr)
@@ -132,11 +134,43 @@ private:
 			return;
 		}
 
-		in_travesal(root->left);
+		std::cout << root->key << " ";
+
+		preorder_travesal(root->left);
+
+		preorder_travesal(root->right);
+
+	}
+
+	void postorder_travesal(Node<T>* root)
+	{
+
+		if (root == nullptr)
+		{
+			return;
+		}
+
+		postorder_travesal(root->left);
+
+		postorder_travesal(root->right);
 
 		std::cout << root->key << ' ';
 
-		in_travesal(root->right);
+	}
+
+	void inorder_travesal(Node<T>* root)
+	{
+
+		if (root == nullptr)
+		{
+			return;
+		}
+
+		inorder_travesal(root->left);
+
+		std::cout << root->key << ' ';
+
+		inorder_travesal(root->right);
 
 	}
 
@@ -212,18 +246,24 @@ public:
 
 	void remove(const T& key)
 	{
-
 		removal(root, key);
-
 	}
 
 
 
-	void print_in()
+	void print_preorder()
 	{
+		preorder_travesal(root);
+	}
 
-		in_travesal(root);
+	void print_postorder()
+	{
+		postorder_travesal(root);
+	}
 
+	void print_inorder()
+	{
+		inorder_travesal(root);
 	}
 
 };

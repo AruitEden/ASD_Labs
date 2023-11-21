@@ -21,12 +21,16 @@ int main()
     tree.insert(9);
     tree.insert(7);
 
-    tree.print_in();
+    std::cout << "Preorder:" << '\n';
+    tree.print_preorder();
     std::cout << '\n';
 
-    tree.remove(9);
+    std::cout << "Postorder:" << '\n';
+    tree.print_postorder();
+    std::cout << '\n';
 
-    tree.print_in();
+    std::cout << "Inorder:" << '\n';
+    tree.print_inorder();
     std::cout << '\n';
 
 
