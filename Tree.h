@@ -26,19 +26,18 @@ private:
 	void count_height(Node* node);
 
 
-	Node* rot_r(Node* node);
+	void rot_r(Node*(& node));
 
-	Node* rot_l(Node* node);
+	void rot_l(Node*(& node));
 
-
-
-	Node* balance(Node* node);
 
 
 
 	void deleteSubTree(Node* node);
 
 	void printNode(Node* node);
+
+	void printNode_l(const Node* node, int n, int level, int prob);
 
 
 
@@ -78,7 +77,7 @@ public:
 
 
 	void print();
-
+	void print_l();
 
 };
 
