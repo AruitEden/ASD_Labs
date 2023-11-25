@@ -58,6 +58,50 @@ void Tree::rot_l(Node*(&node))
 
 
 
+
+Tree::Node* Tree::find_min(Node* node)
+{
+    return node->left?find_min(node->left):node;
+}
+
+
+Tree::Node* Tree::remove_min(Node* node)
+{
+    if (!node->left)
+    {
+        return node->right;
+    }
+
+    node->left = remove_min(node->left);
+
+    count_height(node);
+
+    if (bfac(node) < -1)
+    {
+        if (height(node->left->left) < height(node->left->right))
+        {
+            rot_l(node->left);
+        }
+        rot_r(node);
+    }
+
+    if (bfac(node) > 1)
+    {
+        if (height(node->right->right) < height(node->right->left))
+        {
+            rot_r(node->right);
+        }
+        rot_l(node);
+    }
+
+    count_height(node);
+
+    return node;
+}
+
+
+
+
 void Tree::deleteSubTree(Node* node)
 {
     if (node)
@@ -157,59 +201,88 @@ void Tree::addNode(Node*& node, const int& data)
 }
 
 
-void Tree::deleteNode(Node*& node, const int& data)
+Tree::Node* Tree::deleteNode(Node* node, const int& data)
 {
     if (node == nullptr)
     {
-        return;
+        return nullptr;
     }
 
 	if (data < node->key)
 	{
-		deleteNode(node->left, data);
+		node->left = deleteNode(node->left, data);
 	}
 	else if (data > node->key)
 	{
-        deleteNode(node->right, data);
-	}
-	else if (node->left != nullptr && node->right != nullptr)
-	{
-        Node* temp = node->right;
-
-        while (temp->left != nullptr)
-        {
-            temp = temp->left;
-        }
-
-		node->key = temp->key;
-        deleteNode(node->right, node->key);
+        node->right = deleteNode(node->right, data);
 	}
 	else
 	{
-		Node* current = nullptr;
-		if (node->left != nullptr)
-		{
-			current = node;
-			node = current->left;
-			delete current;
-		}
-		else if (node->right != nullptr)
-		{
-			current = node;
-			node = current->right;
-			delete current;
-		}
-		else
-		{
-			delete node;
-			node = nullptr;
-		}
+        Node* r = node->right;
+        Node* l = node->left;
+
+        if (r == nullptr)
+        {
+            delete node;
+            return l;
+        }
+
+        Node* min = find_min(r);
+        min->right = remove_min(r);
+        min->left = l;
+
+        delete node;
+
+        count_height(min);
+
+        if (bfac(min) < -1)
+        {
+            if (height(min->left->left) < height(min->left->right))
+            {
+                rot_l(min->left);
+            }
+            rot_r(min);
+        }
+
+        if (bfac(min) > 1)
+        {
+            if (height(min->right->right) < height(min->right->left))
+            {
+                rot_r(min->right);
+            }
+            rot_l(min);
+        }
+
+        count_height(min);
+
+        return min;
 	}
 
-    return;
+
+    count_height(node);
+
+    if (bfac(node) < -1)
+    {
+        if (height(node->left->left) < height(node->left->right))
+        {
+            rot_l(node->left);
+        }
+        rot_r(node);
+    }
+
+    if (bfac(node) > 1)
+    {
+        if (height(node->right->right) < height(node->right->left))
+        {
+            rot_r(node->right);
+        }
+        rot_l(node);
+    }
+
+    count_height(node);
+
+    return node;
 }
-
-
 
 
 
@@ -233,7 +306,6 @@ bool Tree::searchNode(Node*& node, const int& data)
         return true;
     }
 }
-
 
 
 

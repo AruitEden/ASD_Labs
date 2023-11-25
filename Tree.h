@@ -32,6 +32,11 @@ private:
 
 
 
+	Node* find_min(Node* node);
+
+	Node* remove_min(Node* node);
+
+
 
 	void deleteSubTree(Node* node);
 
@@ -43,7 +48,7 @@ private:
 
 	void addNode(Node*& node, const int& data);
 
-	void deleteNode(Node*& node, const int& data);
+	Node* deleteNode(Node* node, const int& data);
 
 	bool searchNode(Node*& node, const int& data);
 
@@ -68,7 +73,7 @@ public:
 
 	void remove(const int& data) 
 	{ 
-		deleteNode(root, data);
+		root = deleteNode(root, data);
 	}
 
 
