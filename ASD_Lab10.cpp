@@ -73,16 +73,25 @@ int main()
 
     tree.add(29);
 
+    tree.add(31);
 
-    tree.print();
-    std::cout << "\n\n";
+    tree.add(21);
+    tree.add(23);
 
 
-    tree.remove(27);
-    tree.remove(28);
-    tree.remove(29);
 
-    tree.print();
+    //tree.print();
+    //std::cout << "\n\n";
+
+
+    //tree.remove(27);
+    //tree.remove(28);
+    //tree.remove(29);
+
+    //tree.print();
+    //std::cout << "\n\n";
+
+    tree.print_l();
     std::cout << "\n\n";
 
 }

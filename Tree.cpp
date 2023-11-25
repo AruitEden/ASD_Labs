@@ -131,23 +131,22 @@ void Tree::printNode(Node* node)
 }
 
 
-void Tree::printNode_l(const Node* node, int n, int level, int prob)
+void Tree::printNode_l(const Node* node, int level)
 {
     if (node)
     {
-        if (level == n)
+        printNode_l(node->right, level + 1);
+        std::cout << std::endl;
+
+        std::cout << "    ";
+
+        for (int i = 0; i < level; i++)
         {
-            for (int i = 0; i <= prob; i++)
-            {
-                std::cout << " ";  
-            }
-            std::cout << node->key;
+            std::cout << "    ";
         }
-        else
-        {
-            printNode_l(node->left, n, level + 1, prob);
-            printNode_l(node->right, n, level + 1, prob);
-        }
+        std::cout << node->key;
+
+        printNode_l(node->left, level + 1);
     }
 }
 
@@ -324,16 +323,7 @@ void Tree::print()
 
 void Tree::print_l()
 {
-    int h = height(root);
-    int prob = 3;
-    if (root)
-    {
-        for (int i = 0; i <= h; i++)
-        {
-            printNode_l(root, i, 0, prob * (h - i));
-            std::cout << std::endl;
-        }
-    }
+    printNode_l(root, 0);
 }
 
 

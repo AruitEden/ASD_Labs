@@ -42,7 +42,7 @@ private:
 
 	void printNode(Node* node);
 
-	void printNode_l(const Node* node, int n, int level, int prob);
+	void printNode_l(const Node* node, int level);
 
 
 
