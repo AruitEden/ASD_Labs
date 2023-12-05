@@ -10,26 +10,30 @@ class RB_tree
 
 private:
 	
-	template <typename T>
-	struct Node
+	template <class T>
+	class Node
 	{
+
+	public:
 
 		T key;
 		Node<T>* left;
 		Node<T>* right;
+		Node<T>* parent;
 		bool is_red;
 
 
 	private:
 
-		Node() : key(T()), left(nullptr), right(nullptr), is_red(false) {}
+		Node() : key(T()), left(nullptr), right(nullptr), parent(nullptr), is_red(false) {}
+
 		static const Node<T>* const null_leaf = Node<T>();
 
 
 	public:
 
-		Node(const T& key)
-			: key(key), left(null_leaf), right(null_leaf), is_red(true) {}
+		Node(const T& key, Node<T>* parent = nullptr)
+			: key(key), left(null_leaf), right(null_leaf), parent(parent), is_red(true) {}
 
 
 
@@ -65,6 +69,90 @@ private:
 
 
 	Node<T>* searching(Node<T>* root, const T& key);
+
+	Node<T>* insertion(Node<T>*& root, const T& key)
+	{
+
+		if (root == null_leaf)
+		{
+			root = new Node<T>(key);
+		}
+		else if (key < root->key)
+		{
+			root->left = insertion(root->left, key);
+		}
+		else if (key > root->key)
+		{
+			root->right = insertion(root->right, key);
+		}
+		else
+		{
+			return root;
+		}
+
+
+
+		if (root == this->root)
+		{
+			root->is_red = false;
+			return root;
+		}
+		if (!root->parent->is_red)
+		{
+			return root;
+		}
+
+		bool L = (root == root->parent->left), R = (root == root->parent->right);
+
+		if (L)
+		{
+
+			if (root->parent->parent->right != null_leaf)
+			{
+
+				if (root->parent->parent->right->is_red)
+				{
+
+					root->parent->is_red = false;
+					root->parent->parent->is_red = true;
+					root->parent->parent->is_red = true;
+					return root;
+					/*if (root->parent->parent != this->root)
+					{
+						root->parent->parent->is_red = true;
+					}*/
+
+				}
+
+			}
+			else 
+			{
+
+				bool LL = (root->parent == root->parent->parent->left), LR = (root->parent == root->parent->parent->right);
+
+				if (LL)
+				{
+					root->parent->is_red = false;
+					root->parent->parent->is_red = true;
+					rotate_right(root->parent->parent);
+					return root;
+				}
+				if (LR)
+				{
+					root->is_red = false;
+					root->parent->parent->is_red = true;
+					rotate_left(root->parent);
+					rotate_right(root->parent->parent);
+					return root;
+				}
+
+
+
+			}
+
+		}
+
+	}
 
 
 
@@ -111,6 +199,11 @@ public:
 
 	T* search(const T& key);
 
+	void insert(const T& key)
+	{
+		insertion(root, key);
+	}
+
 
 
 	void print_preorder()
@@ -132,6 +225,7 @@ public:
 	{
 		tree_printing(root, 0);
 	}
+
 
 
 };

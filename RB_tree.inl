@@ -24,12 +24,12 @@ void RB_tree<T>::clear(Node<T>* root)
 
 
 template<class T>
-RB_tree<T>::Node<T>* RB_tree<T>::searching(Node<T>* root, const T& key)
+typename RB_tree<T>::template Node<T>* RB_tree<T>::searching(Node<T>* root, const T& key)
 {
 
-	if (root == nullptr)
+	if (root == null_leaf)
 	{
-		return nullptr;
+		return null_leaf;
 	}
 	if (key > root->key)
 	{
@@ -116,7 +116,12 @@ void RB_tree<T>::tree_printing(Node<T>* root, int space_count, int spacing)
 	{
 		std::cout << ' ';
 	}
-	std::cout << root->key << '\n';
+
+	if (root->is_red)
+	{
+		std::cout << "\033[1;31m";
+	}
+	std::cout << root->key << "\033[1;0m" << '\n';
 
 	tree_printing(root->left, space_count);
 
@@ -125,7 +130,7 @@ void RB_tree<T>::tree_printing(Node<T>* root, int space_count, int spacing)
 
 
 template<class T>
-RB_tree<T>::Node<T>* RB_tree<T>::rotate_right(Node<T>* root)
+typename RB_tree<T>::template Node<T>* RB_tree<T>::rotate_right(Node<T>* root)
 {
 
 	Node<T>* new_root = root->left;
@@ -139,7 +144,7 @@ RB_tree<T>::Node<T>* RB_tree<T>::rotate_right(Node<T>* root)
 }
 
 template<class T>
-RB_tree<T>::Node<T>* RB_tree<T>::rotate_left(Node<T>* root)
+typename RB_tree<T>::template Node<T>* RB_tree<T>::rotate_left(Node<T>* root)
 {
 
 	Node<T>* new_root = root->right;
