@@ -4,14 +4,19 @@
 
 
 
+template <typename T>
+void swap(T& left, T& right);
+
+
+
 template <class T>
 class RB_tree
 {
 
 private:
 
-	template <class T>
-	class Node
+	template <typename T>
+	struct Node
 	{
 
 		T key;
@@ -29,6 +34,8 @@ private:
 
 
 
+
+
 	Node<T>* root;
 
 
@@ -37,13 +44,19 @@ private:
 
 	void clear(Node<T>* root);
 
-
-
 	Node<T>* searching(Node<T>* root, const T& key);
+
+
 
 	void insertion(Node<T>*& root, Node<T>* node);
 
 	void insert_balancing(Node<T>*& root, Node<T>* node);
+
+
+
+	void removal(Node<T>*& root, Node<T>* node);
+
+	void remove_balancing(Node<T>*& root, Node<T>* node, Node<T>* parent);
 
 	
 
@@ -87,6 +100,15 @@ public:
 	{
 		Node<T>* z = new Node<T>(key);
 		insertion(root, z);
+	}
+
+	void remove(T key)
+	{
+		Node<T>* deletenode = searching(root, key);
+		if (deletenode != nullptr)
+		{
+			removal(root, deletenode);
+		}
 	}
 
 

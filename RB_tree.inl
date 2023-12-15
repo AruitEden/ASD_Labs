@@ -21,8 +21,6 @@ void RB_tree<T>::clear(Node<T>* root)
 
 }
 
-
-
 template<class T>
 typename RB_tree<T>::template Node<T>* RB_tree<T>::searching(Node<T>* root, const T& key)
 {
@@ -46,26 +44,34 @@ typename RB_tree<T>::template Node<T>* RB_tree<T>::searching(Node<T>* root, cons
 
 }
 
+template<typename T>
+void swap(T& left, T& right)
+{
+	T temp = left;
+	left = right;
+	right = temp;
+}
+
 
 
 template<class T>
 void RB_tree<T>::insertion(Node<T>*& root, Node<T>* node)
 {
 
-	Node<T>* x = root;
-	Node<T>* y = nullptr;
+	Node<T>* current = root;
+	Node<T>* prev = nullptr;
 
-	while (x != nullptr)
+	while (current != nullptr)
 	{
 
-		y = x;
-		if (node->key > x->key)
+		prev = current;
+		if (node->key > current->key)
 		{
-			x = x->right;
+			current = current->right;
 		}
-		else if (node->key < x->key)
+		else if (node->key < current->key)
 		{
-			x = x->left;
+			current = current->left;
 		}
 		else
 		{
@@ -75,24 +81,28 @@ void RB_tree<T>::insertion(Node<T>*& root, Node<T>* node)
 
 	}
 
-	node->parent = y;
+	node->parent = prev;
 
-	if (y != nullptr)
+	if (prev != nullptr)
 	{
-		if (node->key > y->key)
+
+		if (node->key > prev->key)
 		{
-			y->right = node;
+			prev->right = node;
 		}
 		else
 		{
-			y->left = node;
+			prev->left = node;
 		}
+
 	}
 	else
 	{
 		root = node;
 	}
+
 	node->is_red = true;
+
 	insert_balancing(root, node);
 
 }
@@ -101,20 +111,25 @@ template<class T>
 void RB_tree<T>::insert_balancing(Node<T>*& root, Node<T>* node)
 {
 
-	Node<T>* parent;
-	parent = node->parent;
+	Node<T>* parent = node->parent;
+
 	while (node != this->root && parent->is_red == true)
 	{
+
 		Node<T>* gparent = parent->parent;
+
 		if (gparent->left == parent)
 		{
+
 			Node<T>* uncle = gparent->right;
+
 			if (uncle != nullptr && uncle->is_red == true)
 			{
 
 				parent->is_red = false;
 				uncle->is_red = false;
 				gparent->is_red = true;
+
 				node = gparent;
 				parent = node->parent;
 
@@ -125,18 +140,22 @@ void RB_tree<T>::insert_balancing(Node<T>*& root, Node<T>* node)
 				if (parent->right == node)
 				{
 					rotate_left(root, parent);
-					std::swap(node, parent); // TODO: my own version of swap
+					swap(node, parent);
 				}
+
 				rotate_right(root, gparent);
 				gparent->is_red = true;
 				parent->is_red = false;
 				break;
 
 			}
+
 		}
 		else
 		{
+
 			Node<T>* uncle = gparent->left;
+
 			if (uncle != nullptr && uncle->is_red == true)
 			{
 
@@ -154,18 +173,245 @@ void RB_tree<T>::insert_balancing(Node<T>*& root, Node<T>* node)
 				if (parent->left == node)
 				{
 					rotate_right(root, parent);
-					std::swap(parent, node);
+					swap(parent, node);
 				}
+
 				rotate_left(root, gparent);
 				parent->is_red = false;
 				gparent->is_red = true;
 				break;
 
 			}
+
 		}
+
 	}
 
 	root->is_red = false;
+
+}
+
+
+
+template<class T>
+void RB_tree<T>::removal(Node<T>*& root, Node<T>* node)
+{
+
+	Node<T>* child, *parent;
+	bool color;
+	
+	if (node->left != nullptr && node->right != nullptr)
+	{
+
+		Node<T>* replace = node->right;
+
+		while (replace->left != nullptr)
+		{
+			replace = replace->left;
+		}
+		
+		if (node->parent != nullptr)
+		{
+
+			if (node->parent->left == node)
+			{
+				node->parent->left = replace;
+			}
+			else
+			{
+				node->parent->right = replace;
+			}
+
+		}
+		else
+		{
+			root = replace;
+		}
+		
+		child = replace->right;
+		parent = replace->parent;
+		color = replace->is_red;
+
+		if (parent == node)
+		{
+			parent = replace;
+		}
+		else
+		{
+			
+			if (child != nullptr)
+			{
+				child->parent = parent;
+			}
+
+			parent->left = child;
+			replace->right = node->right;
+			node->right->parent = replace;
+
+		}
+
+		replace->parent = node->parent;
+		replace->is_red = node->is_red;
+		replace->left = node->left;
+		node->left->parent = replace;
+
+		if (color == false)
+		{
+			remove_balancing(root, child, parent);
+		}
+
+		delete node;
+		return;
+
+	}
+	
+	if (node->left != nullptr)
+	{
+		child = node->left;
+	}
+	else
+	{
+		child = node->right;
+	}
+
+	parent = node->parent;
+	color = node->is_red;
+
+	if (child)
+	{
+		child->parent = parent;
+	}
+	
+	if (parent)
+	{
+
+		if (node == parent->left)
+		{
+			parent->left = child;
+		}
+		else
+		{
+			parent->right = child;
+		}
+
+	}
+	else
+	{
+		this->root = child;
+	}
+
+	if (color == false)
+	{
+		remove_balancing(root, child, parent);
+	}
+
+	delete node;
+
+}
+
+template<class T>
+void RB_tree<T>::remove_balancing(Node<T>*& root, Node<T>* node, Node<T>* parent)
+{
+
+	Node<T>* other;
+
+	while ((node) && node->is_red == false && node != this->root)
+	{
+
+		if (parent->left == node)
+		{
+
+			other = parent->right;
+
+			if (other->is_red == true)
+			{
+
+				other->is_red = false;
+				parent->is_red = true;
+
+				rotate_left(root, parent);
+				other = parent->right;
+
+			}
+			else
+			{
+
+				if (!(other->right) || other->right->is_red == false)
+				{
+
+					other->left->is_red = false;
+					other->is_red = true;
+
+					rotate_right(root, other);
+					other = parent->right;
+
+				}
+
+				other->is_red = parent->is_red;
+				parent->is_red = false;
+				other->right->is_red = false;
+
+				rotate_left(root, parent);
+				node = root;
+				break;
+
+			}
+
+		}
+		else
+		{
+
+			other = parent->left;
+
+			if (other->is_red == true)
+			{
+
+				other->is_red = false;
+				parent->is_red = true;
+
+				rotate_right(root, parent);
+				other = parent->left;
+
+			}
+
+			if ((!other->left || other->left->is_red == false) && (!other->right || other->right->is_red == false))
+			{
+				other->is_red = true;
+				node = parent;
+				parent = node->parent;
+			}
+			else
+			{
+
+				if (!(other->left) || other->left->is_red == false)
+				{
+
+					other->right->is_red = false;
+					other->is_red = true;
+
+					rotate_left(root, other);
+					other = parent->left;
+
+				}
+
+				other->is_red = parent->is_red;
+				parent->is_red = false;
+				other->left->is_red = false;
+
+				rotate_right(root, parent);
+				node = root;
+				break;
+
+			}
+
+		}
+
+	}
+
+	if (node)
+	{
+		node->is_red = false;
+	}
 
 }
 
@@ -177,18 +423,21 @@ void RB_tree<T>::rotate_left(Node<T>*& root, Node<T>* x)
 
 	Node<T>* y = x->right;
 	x->right = y->left;
+
 	if (y->left != nullptr)
 	{
 		y->left->parent = x;
 	}
 
 	y->parent = x->parent;
+
 	if (x->parent == nullptr)
 	{
 		root = y;
 	}
 	else 
 	{
+
 		if (x == x->parent->left)
 		{
 			x->parent->left = y;
@@ -197,7 +446,9 @@ void RB_tree<T>::rotate_left(Node<T>*& root, Node<T>* x)
 		{
 			x->parent->right = y;
 		}
+
 	}
+
 	y->left = x;
 	x->parent = y;
 
@@ -209,18 +460,21 @@ void RB_tree<T>::rotate_right(Node<T>*& root, Node<T>* y)
 
 	Node<T>* x = y->left;
 	y->left = x->right;
+
 	if (x->right != nullptr)
 	{
 		x->right->parent = y;
 	}
 
 	x->parent = y->parent;
+
 	if (y->parent == nullptr)
 	{
 		root = x;
 	}
 	else 
 	{
+
 		if (y == y->parent->right)
 		{
 			y->parent->right = x;
@@ -229,7 +483,9 @@ void RB_tree<T>::rotate_right(Node<T>*& root, Node<T>* y)
 		{
 			y->parent->left = x;
 		}
+
 	}
+
 	x->right = y;
 	y->parent = x;
 
