@@ -48,15 +48,15 @@ private:
 
 
 
-	void insertion(Node<T>*& root, Node<T>* node);
+	void insertion(Node<T>* node);
 
-	void insert_balancing(Node<T>*& root, Node<T>* node);
+	void insert_balancing(Node<T>* node);
 
 
 
-	void removal(Node<T>*& root, Node<T>* node);
+	void removal(Node<T>* node);
 
-	void remove_balancing(Node<T>*& root, Node<T>* node, Node<T>* parent);
+	void remove_balancing(Node<T>* node, Node<T>* parent);
 
 	
 
@@ -98,8 +98,8 @@ public:
 
 	void insert(T key)
 	{
-		Node<T>* z = new Node<T>(key);
-		insertion(root, z);
+		Node<T>* new_node = new Node<T>(key);
+		insertion(new_node);
 	}
 
 	void remove(T key)
@@ -107,7 +107,7 @@ public:
 		Node<T>* deletenode = searching(root, key);
 		if (deletenode != nullptr)
 		{
-			removal(root, deletenode);
+			removal(deletenode);
 		}
 	}
 

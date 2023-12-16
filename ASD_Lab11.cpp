@@ -4,157 +4,159 @@
 
 
 
+enum class Menu_commands
+{
+
+    DEFAULT = 0,
+    CLEAR_CONSOLE = 'c',
+    QUIT_PROGRAM = 'q',
+    PRINT_HELP = 'h',
+
+    INSERT = '+',
+    REMOVE = '-',
+    SEARCH = '?',
+
+    PRINT_TREE = 'p',
+    PRINT_PREORDER = '1',
+    PRINT_POSTORDER = '2',
+    PRINT_INORDER = '3',
+
+};
+
+
+
+void Print_command_info();
+
+
+
+
+
 int main()
 {
 
-//#define TESTS
-
-#ifdef TESTS
-
-    std::vector<int> vec{ 1, 3, 5, 7, 8 };
-
-    for (size_t i = 0; i < vec.size(); i++)
-    {
-        std::cout << "tree.insert(" << vec[i] << ");\n";
-    }
-    std::cout << "---------------------------\n";
-    for (size_t i = 0; i < vec.size(); i++)
-    {
-        std::cout << "tree.remove(" << vec[i] << ");\n";
-    }
-
-#endif
-
-
-
-
-
     RB_tree<int> tree;
-    tree.insert(4);
-    tree.insert(2);
-    tree.insert(6);
-    tree.insert(1);
-    tree.insert(5);
-    tree.insert(7);
-    tree.insert(3);
-    tree.insert(8);
+    int key;
+
+    char command;
+    bool run = true;
+    Print_command_info();
+
+    while (run)
+    {
+
+        std::cout << "----- MAIN MENU -----\n" << "Enter command: ";
+        if (std::cin.peek() == '\n')
+        {
+            std::cin.ignore(1);
+        }
+        std::cin >> command;
+
+        switch ((Menu_commands)command)
+        {
+
+        case Menu_commands::CLEAR_CONSOLE:
+            system("cls");
+            break;
 
 
-    tree.remove(10);
-    tree.remove(20);
-    tree.remove(30);
+        case Menu_commands::PRINT_HELP:
+            Print_command_info();
+            break;
 
 
+        case Menu_commands::QUIT_PROGRAM:
+            run = false;
+            break;
 
 
-
-    std::cout << "------- TREE -------\n";
-    tree.print_tree();
-    std::cout << "--------------------\n";
-
-    std::cout << "inorder: ";
-    tree.print_inorder();
-    std::cout << '\n';
-
-    std::cout << "preorder: ";
-    tree.print_preorder();
-    std::cout << '\n';
-
-    std::cout << "postorder: ";
-    tree.print_postorder();
-    std::cout << '\n';
+        case Menu_commands::INSERT:
+            std::cout << "Enter key: ";
+            std::cin >> key;
+            tree.insert(key);
+            std::cout << "Tree:\n\n";
+            tree.print_tree();
+            break;
 
 
+        case Menu_commands::REMOVE:
+            std::cout << "Enter key: ";
+            std::cin >> key;
+            tree.remove(key);
+            std::cout << "Tree:\n\n";
+            tree.print_tree();
+            break;
 
 
-    /*
-    RB_tree<int> tree;
-    tree.insert(1);
-    tree.insert(2);
-    tree.insert(3);
-    tree.insert(4);
-    tree.insert(5);
-    tree.insert(6);
-    tree.insert(7);
+        case Menu_commands::SEARCH:
+            std::cout << "Enter key: ";
+            std::cin >> key;
+            std::cout << std::boolalpha << (tree.search(key) != nullptr) << '\n';
+            break;
 
 
-    tree.remove(5);
-    tree.remove(10);
-    tree.remove(1);
+        case Menu_commands::PRINT_TREE:
+            std::cout << "Tree:\n\n";
+            tree.print_tree();
+            break;
 
 
-    tree.insert(10);
-    tree.insert(5);
-    tree.insert(15);
-    tree.print_tree();
-    std::cout << "-------------------------\n\n";
-
-    tree.insert(3);
-    tree.print_tree();
-    std::cout << "-------------------------\n\n";
-
-    tree.insert(14);
-    tree.print_tree();
-    std::cout << "-------------------------\n\n";
-
-    tree.insert(33);
-    tree.print_tree();
-    std::cout << "-------------------------\n\n";
-
-    tree.insert(8);
-    tree.print_tree();
-    std::cout << "-------------------------\n\n";
-
-    tree.insert(2);
-    tree.print_tree();
-    std::cout << "-------------------------\n\n";
-    //RECOLOUR TEST
+        case Menu_commands::PRINT_PREORDER:
+            std::cout << "Preorder travesal:\n";
+            tree.print_preorder();
+            std::cout << '\n';
+            break;
 
 
+        case Menu_commands::PRINT_POSTORDER:
+            std::cout << "Postorder travesal:\n";
+            tree.print_postorder();
+            std::cout << '\n';
+            break;
 
 
-    tree.insert(1);
-    tree.print_tree();
-    std::cout << "-------------------------\n\n";
+        case Menu_commands::PRINT_INORDER:
+            std::cout << "Inorder travesal:\n";
+            tree.print_inorder();
+            std::cout << '\n';
+            break;
 
 
-    tree.insert(11);
-    tree.print_tree();
-    std::cout << "-------------------------\n\n";
-    tree.insert(6);
-    tree.print_tree();
-    std::cout << "-------------------------\n\n";
-    tree.insert(9);
-    tree.print_tree();
-    std::cout << "-------------------------\n\n";
-    tree.insert(7);
-    tree.print_tree();
-    std::cout << "-------------------------\n\n";
-    tree.insert(4);
-    tree.print_tree();
-    std::cout << "-------------------------\n\n";
+        default:
+            std::cout << "There is no such command.\n";
+            break;
 
+        }
 
+        std::cout << "\n\n";
 
-    tree.remove(10);
-    tree.print_tree();
-    std::cout << "-------------------------\n\n";
+    }
 
-    tree.remove(11);
-    tree.print_tree();
-    std::cout << "-------------------------\n\n";
-
-    tree.remove(14);
-    tree.print_tree();
-    std::cout << "-------------------------\n\n";
-
-    tree.remove(8);
-    tree.print_tree();
-    std::cout << "-------------------------\n\n";
-
-    tree.print_tree();
-    */
+    return 0;
 
 }
 
 
+
+
+
+void Print_command_info()
+{
+
+    std::cout << "Commands list:\n"
+
+        << "\'" << (char)Menu_commands::PRINT_HELP << "\' - print help\n"
+        << "\'" << (char)Menu_commands::CLEAR_CONSOLE << "\' - clear console\n"
+        << "\'" << (char)Menu_commands::QUIT_PROGRAM << "\' - quit program\n"
+
+        << "\'" << (char)Menu_commands::INSERT << "\' - insert\n"
+        << "\'" << (char)Menu_commands::REMOVE << "\' - remove\n"
+        << "\'" << (char)Menu_commands::SEARCH << "\' - search\n"
+
+        << "\'" << (char)Menu_commands::PRINT_TREE << "\' - print tree\n"
+        << "\'" << (char)Menu_commands::PRINT_PREORDER << "\' - print preorder travesal\n"
+        << "\'" << (char)Menu_commands::PRINT_POSTORDER << "\' - print postorder travesal\n"
+        << "\'" << (char)Menu_commands::PRINT_INORDER << "\' - print inorder travesal\n"
+
+        << "\n\n";
+
+}

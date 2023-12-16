@@ -55,7 +55,7 @@ void swap(T& left, T& right)
 
 
 template<class T>
-void RB_tree<T>::insertion(Node<T>*& root, Node<T>* node)
+void RB_tree<T>::insertion(Node<T>* node)
 {
 
 	Node<T>* current = root;
@@ -103,17 +103,17 @@ void RB_tree<T>::insertion(Node<T>*& root, Node<T>* node)
 
 	node->is_red = true;
 
-	insert_balancing(root, node);
+	insert_balancing(node);
 
 }
 
 template<class T>
-void RB_tree<T>::insert_balancing(Node<T>*& root, Node<T>* node)
+void RB_tree<T>::insert_balancing(Node<T>* node)
 {
 
 	Node<T>* parent = node->parent;
 
-	while (node != this->root && parent->is_red == true)
+	while (node != root && parent->is_red == true)
 	{
 
 		Node<T>* gparent = parent->parent;
@@ -173,7 +173,7 @@ void RB_tree<T>::insert_balancing(Node<T>*& root, Node<T>* node)
 				if (parent->left == node)
 				{
 					rotate_right(root, parent);
-					swap(parent, node);
+					swap(node, parent);
 				}
 
 				rotate_left(root, gparent);
@@ -194,7 +194,7 @@ void RB_tree<T>::insert_balancing(Node<T>*& root, Node<T>* node)
 
 
 template<class T>
-void RB_tree<T>::removal(Node<T>*& root, Node<T>* node)
+void RB_tree<T>::removal(Node<T>* node)
 {
 
 	Node<T>* child, *parent;
@@ -257,7 +257,7 @@ void RB_tree<T>::removal(Node<T>*& root, Node<T>* node)
 
 		if (color == false)
 		{
-			remove_balancing(root, child, parent);
+			remove_balancing(child, parent);
 		}
 
 		delete node;
@@ -297,12 +297,12 @@ void RB_tree<T>::removal(Node<T>*& root, Node<T>* node)
 	}
 	else
 	{
-		this->root = child;
+		root = child;
 	}
 
 	if (color == false)
 	{
-		remove_balancing(root, child, parent);
+		remove_balancing(child, parent);
 	}
 
 	delete node;
@@ -310,12 +310,12 @@ void RB_tree<T>::removal(Node<T>*& root, Node<T>* node)
 }
 
 template<class T>
-void RB_tree<T>::remove_balancing(Node<T>*& root, Node<T>* node, Node<T>* parent)
+void RB_tree<T>::remove_balancing(Node<T>* node, Node<T>* parent)
 {
 
 	Node<T>* other;
 
-	while ((node) && node->is_red == false && node != this->root)
+	while ((node == nullptr || node->is_red == false) && node != root)
 	{
 
 		if (parent->left == node)
@@ -336,7 +336,7 @@ void RB_tree<T>::remove_balancing(Node<T>*& root, Node<T>* node, Node<T>* parent
 			else
 			{
 
-				if (!(other->right) || other->right->is_red == false)
+				if (other->right == nullptr || other->right->is_red == false)
 				{
 
 					other->left->is_red = false;
@@ -374,7 +374,7 @@ void RB_tree<T>::remove_balancing(Node<T>*& root, Node<T>* node, Node<T>* parent
 
 			}
 
-			if ((!other->left || other->left->is_red == false) && (!other->right || other->right->is_red == false))
+			if ((other->left == nullptr || other->left->is_red == false) && (other->right == nullptr || other->right->is_red == false))
 			{
 				other->is_red = true;
 				node = parent;
@@ -383,7 +383,7 @@ void RB_tree<T>::remove_balancing(Node<T>*& root, Node<T>* node, Node<T>* parent
 			else
 			{
 
-				if (!(other->left) || other->left->is_red == false)
+				if (other->left == nullptr || other->left->is_red == false)
 				{
 
 					other->right->is_red = false;
