@@ -76,13 +76,13 @@ public:
 	void print_heap() const
 	{
 
-		std::cout << "Array: ";
+		std::cout << "As array: ";
 		for (size_t i = 0; i < size; i++)
 		{
 			std::cout << harr[i] << ' ';
 		}
 
-		std::cout << "\nTree:\n";
+		std::cout << "\nAs tree:\n";
 		heap_printing(0, 0);
 
 	}

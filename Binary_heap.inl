@@ -63,8 +63,11 @@ void Binary_heap<T>::push(const T& key)
 template<class T>
 void Binary_heap<T>::remove(size_t index)
 {
-	dec_key(index, BH_T_MIN);
-	pop_min();
+	if (index < size)
+	{
+		dec_key(index, BH_T_MIN);
+		pop_min();
+	}
 }
 
 template<class T>
