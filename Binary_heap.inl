@@ -28,6 +28,16 @@ void Binary_heap<T>::heap_printing(size_t index, int space_count, int spacing) c
 
 }
 
+template<class T>
+void Binary_heap<T>::sift_up(size_t index)
+{
+	while (index > 0 && harr[parent(index)] > harr[index])
+	{
+		swap(harr[index], harr[parent(index)]);
+		index = parent(index);
+	}
+}
+
 
 
 template<class T>
@@ -52,11 +62,10 @@ void Binary_heap<T>::push(const T& key)
 	}
 
 	harr[size] = key;
+	
+	sift_up(size);
 
-	for (size_t i = size++; i > 0 && harr[parent(i)] > harr[i]; i = parent(i))
-	{
-		swap(harr[i], harr[parent(i)]);
-	}
+	++size;
 
 }
 
@@ -100,11 +109,7 @@ void Binary_heap<T>::dec_key(size_t index, T new_value)
 
 	harr[index] = new_value;
 	
-	while (index > 0 && harr[parent(index)] > harr[index])
-	{
-		swap(harr[index], harr[parent(index)]);
-		index = parent(index);
-	}
+	sift_up(index);
 
 }
 

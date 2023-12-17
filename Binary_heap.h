@@ -29,6 +29,8 @@ private:
 
 	void heap_printing(size_t index, int space_count, int spacing = 5) const;
 
+	void sift_up(size_t index);
+
 
 public:
 
