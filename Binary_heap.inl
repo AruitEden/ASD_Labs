@@ -5,6 +5,32 @@
 
 
 template<class T>
+void Binary_heap<T>::heap_printing(size_t index, int space_count, int spacing) const
+{
+
+	space_count += spacing;
+
+	if (right(index) < size)
+	{
+		heap_printing(right(index), space_count);
+	}
+
+	for (int i = 0; i < space_count; i++)
+	{
+		std::cout << ' ';
+	}
+	std::cout << harr[index] << '\n';
+
+	if (left(index) < size)
+	{
+		heap_printing(left(index), space_count);
+	}
+
+}
+
+
+
+template<class T>
 void Binary_heap<T>::push(const T& key)
 {
 
@@ -89,11 +115,11 @@ void Binary_heap<T>::heapify(size_t index)
 	size_t r = right(index);
 	size_t lowest = index;
 
-	if (l < index && harr[l] < harr[index])
+	if (l < size && harr[l] < harr[index])
 	{
 		lowest = l;
 	}
-	if (r < index && harr[r] < harr[index])
+	if (r < size && harr[r] < harr[lowest])
 	{
 		lowest = r;
 	}
@@ -119,9 +145,9 @@ void Binary_heap<T>::create_from_array(const T* arr, size_t size)
 		harr[i] = arr[i];
 	}
 
-	for (size_t i = size / 2; i >= 0; i--)
+	for (size_t i = 0; i <= size / 2; i++)
 	{
-		heapify(i);
+		heapify(size / 2 - i);
 	}
 
 }

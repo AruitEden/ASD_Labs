@@ -27,61 +27,14 @@ private:
 
 
 
-	void print_spaces(int space_count)
-	{
-		for (int i = 0; i < space_count; i++)
-		{
-			std::cout << ' ';
-		}
-	}
-
-	void heap_printing(int space_count)
-	{
-
-		for (size_t i = 0; i < size; i++)
-		{
-			std::cout << harr[i] << ' ';
-		}
-
-		std::cout << '\n';
-
-
-		
-		print_spaces(space_count * size / 2);
-		std::cout << harr[0] << '\n';
-
-		for (int i = 0; i < log2(size); i++)
-		{
-
-			print_spaces(space_count * size / ((i + 1) * 4));
-
-			for (int j = i; j < i * 2 + 1; j++)
-			{
-
-				if (left(j) < size)
-				{
-					std::cout << harr[left(j)];
-				}
-
-				print_spaces(space_count * size / 2 / (i + 1));
-
-				if (right(j) < size)
-				{
-					std::cout << harr[right(j)];
-				}
-				
-			}
-
-			std::cout << '\n';
-
-		}
-
-	}
+	void heap_printing(size_t index, int space_count, int spacing = 5) const;
 
 
 public:
 
 	const T BH_T_MIN;
+
+
 
 	Binary_heap(T min) : capacity(0), size(0), harr(nullptr), BH_T_MIN(min) {}
 
@@ -96,11 +49,11 @@ public:
 
 
 
-	size_t parent(size_t i) { return (i - 1) / 2; }
+	size_t parent(size_t i) const { return (i - 1) / 2; }
 
-	size_t left(size_t i) { return (2 * i + 1); }
+	size_t left(size_t i) const { return (2 * i + 1); }
 
-	size_t right(size_t i) { return (2 * i + 2); }
+	size_t right(size_t i) const { return (2 * i + 2); }
 
 
 
@@ -120,9 +73,18 @@ public:
 
 
 
-	void print_heap()
+	void print_heap() const
 	{
-		heap_printing(size * 7);
+
+		std::cout << "Array: ";
+		for (size_t i = 0; i < size; i++)
+		{
+			std::cout << harr[i] << ' ';
+		}
+
+		std::cout << "\nTree:\n";
+		heap_printing(0, 0);
+
 	}
 
 };
