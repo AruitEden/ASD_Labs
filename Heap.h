@@ -5,9 +5,9 @@ class Heap
 {
 private:
 
-	int* arr;
-	int size;
 	int capacity;
+	int size;
+	int* arr;
 
 
 	void resize();
@@ -20,13 +20,15 @@ private:
 
 public:
 
-	Heap():capacity(10), size(0), arr(new int[capacity]{})
+	Heap():capacity(10), size(0), arr(new int[capacity])
 	{
 	}
+
 	~Heap()
 	{
-		delete arr;
+		delete[] arr;
 	}
+
 
 
 	void push(int data)
@@ -38,12 +40,17 @@ public:
 
 		arr[size] = data;
 
+
+		siftUp(size);
+
 		size++;
-
-
-		siftUp(size - 1);
 	}
+
 	void pop();
+
+
+
+	void erase(int index);
 
 
 	void print();
